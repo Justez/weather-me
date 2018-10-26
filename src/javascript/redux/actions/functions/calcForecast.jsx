@@ -27,44 +27,36 @@ const calcForecast = (forecast = []) => (dispatch) => {
       highestTemp: '',
       tempMin: '',
       date: '',
-      rain: [],
+      rain: { mm: 0, times: 0 },
       wind: [],
     });
     const d = new Date();
     let highestTemp = '';
+
     for (let i = 0; i < 5; i += 1) {
       let date = new Date(d.getTime() + (i * 24 * 60 * 60 * 1000));
       date = `${date.getFullYear()}-${String(date.getMonth() + 1).substr(-2)}-${String(date.getDate()).substr(-2)}`;
-
       forecast.list.forEach((item) => {
         if (item.dt_txt.includes(date)) {
+          const hour = item.dt_txt.slice(-8, -6);
           result[i] = {
             ...result[i],
             cloudy: [...result[i].cloudy, item.clouds.all],
             pressure: [...result[i].pressure, item.main.pressure],
-            rain: [
-              ...result[i].rain,
-              item.rain && item.rain['3h']
-                ? item.rain['3h']
-                : undefined,
-            ],
-            tempMax:
-              result[i].tempMax < item.main.temp_max
-                ? item.main.temp_max
-                : result[i].tempMax,
-            tempMin:
-              result[i].tempMin > item.main.temp_min || !result[i].tempMin
-                ? item.main.temp_min
-                : result[i].tempMin,
-            wind:
-              result[i].wind < item.wind.speed || !result[i].wind
-                ? item.wind.speed
-                : result[i].wind,
+            rain: item.rain && item.rain['3h'] && hour > 3 && hour < 21
+              ? {
+                times: result[i].rain.times + 1,
+                mm: Math.max(result[i].rain.mm, item.rain['3h']),
+              } : result[i].rain,
+            tempMax: Math.max(result[i].tempMax, item.main.temp_max),
+            tempMin: Math.min(result[i].tempMin || item.main.temp_min, item.main.temp_min),
+            wind: result[i].wind < item.wind.speed || !result[i].wind
+              ? item.wind.speed
+              : result[i].wind,
           };
         }
       });
 
-      const times = result[i].cloudy.length;
       highestTemp = result[i].tempMax > highestTemp ? result[i].tempMax : highestTemp;
 
       result[i] = {
@@ -76,41 +68,42 @@ const calcForecast = (forecast = []) => (dispatch) => {
         tempMax: Math.round(result[i].tempMax),
         tempMin: Math.round(result[i].tempMin),
         wind: Math.round(result[i].wind),
-        rain: result[i].rain
-          .filter(item => item)
-          .reduce((a, b) => (a + b)) / result[i].rain.filter(item => item).length,
         date,
       };
 
-      let weatherIcon = '01';
+      let weatherIcon = '01d';
       let weatherDescription = 'Sunny';
 
-      if (result[i].rain < 0.1 && result[i].pressure > 1000) {
+      if (result[i].rain.mm < 0.5 && result[i].rain.times < 1) {
+        // TODO: mostly sunny, or just cloudy
         if (result[i].cloudy < 40) {
-          weatherIcon = '02';
+          weatherIcon = '02d';
           weatherDescription = 'Few clouds';
         } else if (result[i].cloudy < 80) {
-          weatherIcon = '03';
+          weatherIcon = '03d';
           weatherDescription = 'Scattered clouds';
         } else {
-          weatherIcon = '04';
+          weatherIcon = '04d';
           weatherDescription = 'Broken clouds';
         }
-      } else if (result[i].pressure < 1000) {
-        if (result[i].rain <= 1.5) {
-          weatherIcon = '10';
-          weatherDescription = 'Rain';
+      } else if (result[i].rain.mm <= 1 && result[i].rain.times <= 3) {
+        // TODO: light rain, half of day sunny, other light shower
+        if (result[i].cloudy < 80) {
+          weatherIcon = '03d';
+          weatherDescription = 'Scattered clouds';
         } else {
-          weatherIcon = '09';
-          weatherDescription = 'Shower rain';
+          weatherIcon = '10d';
+          weatherDescription = 'Rain';
         }
-        if (result[i].minTemp < 0) {
-          weatherIcon = '13';
-          weatherDescription = '';
-        }
+      } else if (result[i].rain.mm > 2 && result[i].rain.times > 3) {
+        // TODO: shitty weather light rain all day
+        weatherIcon = '09d';
+        weatherDescription = 'Shower rain';
+      } else if (result[i].rain.mm > 1 && result[i].rain.times > 3) {
+        // TODO: shit im not going outside
+        weatherIcon = '10d';
+        weatherDescription = 'Rain';
       }
-
-      weatherIcon += times < 3 ? 'n' : 'd';
 
       result[i] = {
         ...result[i],
