@@ -25,18 +25,10 @@ const navigatorAbsent = () => ({
   type: 'NAVIGATOR_IS_NOT_AVAILABLE',
 });
 
-// const placeDescriptionStarted = () => ({
-//   type: 'SET_PLACE_DESCRIPTION_STARTED',
-// });
-
 const placeDescriptionSuccess = place => ({
   type: 'SET_PLACE_DESCRIPTION',
   payload: place,
 });
-
-// const placeDescriptionFailed = () => ({
-//   type: 'GET_PLACE_DESCRIPTION_FAILED',
-// });
 
 const getForecastStarted = () => ({
   type: 'GET_FORECAST_STARTED',
@@ -69,18 +61,6 @@ const getForecastFailed = () => ({
 
 const setBrowserLocationSuccess = () => ({
   type: 'SET_BROWSER_LOCATION_SUCCESS',
-});
-
-const addCookieStarted = () => ({
-  type: 'ADD_COOKIE_STARTED',
-});
-
-const addCookieFailed = () => ({
-  type: 'ADD_COOKIE_FAILED',
-});
-
-const setFavoriteCity = () => ({
-  type: 'CHANGE_CITY_FAVORITE',
 });
 
 const getWeatherForecastByCoords = coords => (dispatch) => {
@@ -127,27 +107,6 @@ const getWeatherConditionsByCoords = coords => (dispatch) => {
     });
 };
 
-export const setCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
-  dispatch(addCookieStarted());
-  const cookies = document.cookie ? JSON.parse(document.cookie) : [];
-  if (Array.isArray(cookies)) {
-    const cookie = cookies.find(coo => coo.country === countryCode)
-      || { country: countryCode, cities: [] };
-    cookies.splice(cookies.findIndex(coo => coo.country === countryCode), 1);
-    if (cookie.cities.find(city => city.id === id)) {
-      const cityArray = cookie.cities;
-      cityArray.splice(cityArray.findIndex(coo => coo.id === id), 1);
-      cookie.cities = cityArray;
-    } else {
-      cookie.cities.push({ id, name });
-    }
-    cookies.push(cookie);
-    document.cookie = JSON.stringify(cookies);
-    dispatch(setFavoriteCity());
-  } else { // malformed data from outside
-    dispatch(addCookieFailed());
-  }
-};
 
 export const getBrowserLocationAction = () => (dispatch) => {
   dispatch(navigatorStarted());
@@ -160,7 +119,6 @@ export const getBrowserLocationAction = () => (dispatch) => {
           lng: position.coords.longitude,
         };
         dispatch(navigatorSuccess(koord));
-        // dispatch(getPlaceDescriptionByCoords(koord));
         dispatch(getWeatherConditionsByCoords(koord));
         dispatch(getWeatherForecastByCoords(koord));
         dispatch(setBrowserLocationSuccess());
