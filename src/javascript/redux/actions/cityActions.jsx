@@ -1,4 +1,5 @@
-/* eslint-disable no-undef, no-unused-vars */
+// import axios from 'axios';
+
 import {
   findCityInStorage,
   getCityStorage,
@@ -8,24 +9,12 @@ const changeCityFavoriteStarted = () => ({
   type: 'CHANGE_CITY_FAVORITE_STARTED',
 });
 
-const changeCityFavoriteFailed = () => ({
-  type: 'CHANGE_CITY_FAVORITE_FAILED',
-});
-
 export const setCityFavorite = () => ({
   type: 'CHANGE_CITY_FAVORITE',
 });
 
 const parseStorageStarted = () => ({
   type: 'PARSE_STORAGE_STARTED',
-});
-
-const findCityInStorageFailed = () => ({
-  type: 'FIND_CITY_IN_STORAGE_FAILED',
-});
-
-const findCityInStorageStarted = () => ({
-  type: 'FIND_CITY_IN_STORAGE_STARTED',
 });
 
 const parseStorageFailed = () => ({
@@ -48,26 +37,16 @@ export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) =>
   dispatch(parseStorageStarted());
   const storage = getCityStorage();
   if (storage) {
-    console.log(storage);
-    dispatch(findCityInStorageStarted());
     const isInStorage = findCityInStorage(storage, id, countryCode);
-    console.log(isInStorage);
     if (isInStorage) {
-      if (isInStorage.id) {
-        dispatch(removeCityFromStorageSuccess());
-      } else {
-        dispatch(addCityToStorageStarted());
-        // TODO: storage command
-
-        dispatch(addCityToStorageSuccess());
-      }
+      dispatch(removeCityFromStorageSuccess());
     } else {
-      // TODO: notify
-      dispatch(findCityInStorageFailed());
+      dispatch(addCityToStorageStarted());
+      // TODO: storage command
+
+      dispatch(addCityToStorageSuccess());
     }
-    console.log(isInStorage);
   } else {
-    dispatch(removeCityFavorite());
     dispatch(parseStorageFailed());
   }
   dispatch(changeCityFavoriteStarted());
@@ -111,12 +90,11 @@ export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) =>
 //     dispatch(parseStorageFailed());
 //   }
 // };
-
-// const getPlaceDescriptionByCoords = coords => (dispatch) => {
+//
+// export const getPlaceDescriptionByCoords = coords => (dispatch) => {
 //   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=AIzaSyAa2OXPttUPWWRvUJsSv4WqZHLE-h_fgjo`;
 //   dispatch(placeDescriptionStarted());
-//   fetch(url)
-//     .then(response => response.json())
+//   axios(url)
 //     .then((results) => {
 //       if (results.status === 'OK') {
 //         dispatch(placeDescriptionSuccess(results.results[0].formatted_address));

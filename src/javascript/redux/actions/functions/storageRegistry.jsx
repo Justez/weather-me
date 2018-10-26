@@ -13,8 +13,8 @@ export const getCityStorage = () => {
 };
 
 export const isCityFavoriteInStorage = async (cityCode, country) => {
-  const cookies = await getCityStorage();
-  const favorited = cookies.find(cookie => cookie.country === country
+  const storage = await getCityStorage();
+  const favorited = storage.find(cookie => cookie.country === country
     && cookie.cities.find(city => city.id === cityCode)) ? '1' : '0';
   return favorited;
 };
@@ -23,8 +23,10 @@ export const isCityFavoriteInStorage = async (cityCode, country) => {
 //
 // }
 
-export const findCityInStorage = async (cityStorage, id, countryCode) => {
-  const country = cityStorage.find(coo => coo.country === countryCode)
-    || { country: countryCode, cities: [] };
-  return country.cities.find(city => city.id === id);
+export const findCityInStorage = (cityStorage, id, countryCode) => {
+  const country = cityStorage.find(coo => coo.country === countryCode);
+  if (country.cities) {
+    return country.cities.find(city => city.id === id);
+  }
+  return '0';
 };

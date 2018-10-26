@@ -90,7 +90,7 @@ const getWeatherConditionsByCoords = coords => (dispatch) => {
   axios.get(url)
     .then((results) => {
       if (results.data.cod === 200 && results.status === 200) {
-        isCityFavoriteInStorage(results.data.sys.id, results.data.sys.country)
+        isCityFavoriteInStorage(results.data.id, results.data.sys.country)
           .then((favorite) => {
             const output = { ...results.data, favorite };
             dispatch(setCurrentWeather(output));

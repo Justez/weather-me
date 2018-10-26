@@ -10,7 +10,7 @@ const dayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];
 const today = new Date();
 
-const CurrentWeatherBlock = ({ weather, weatherIcons, setCityFavorite }) => {
+const CurrentWeatherBlock = ({ weather, weatherIcons, changeCityFavorite }) => {
   if (weather.main) {
     return (
       <div className="Current-weather background">
@@ -19,7 +19,7 @@ const CurrentWeatherBlock = ({ weather, weatherIcons, setCityFavorite }) => {
           <FontAwesomeIcon
             className={`${weather.favorite === '1' ? 'favorite' : ''}`}
             icon={faStar}
-            onClick={() => setCityFavorite(weather.sys.id, weather.name, 'LT')}
+            onClick={() => changeCityFavorite(weather.sys.id, weather.name, 'LT')}
           />
         </div>
         <div className="Current-weather-block">
@@ -72,7 +72,7 @@ const CurrentWeatherBlock = ({ weather, weatherIcons, setCityFavorite }) => {
 };
 
 CurrentWeatherBlock.propTypes = {
-  setCityFavorite: PropTypes.func.isRequired,
+  changeCityFavorite: PropTypes.func.isRequired,
   weather: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.objectOf(PropTypes.oneOfType([
@@ -96,7 +96,7 @@ CurrentWeatherBlock.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setCityFavorite: (id, name, countryCode) => {
+  changeCityFavorite: (id, name, countryCode) => {
     dispatch(changeCityFavoriteAction(id, name, countryCode));
   },
 });
