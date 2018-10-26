@@ -91,7 +91,7 @@ const getWeatherForecastByCoords = coords => (dispatch) => {
     .then((results) => {
       if (results.cod === '200') {
         dispatch(calcForecast(results));
-        dispatch(placeDescriptionSuccess(`${results.city.name}, ${results.city.country}`));
+        dispatch(placeDescriptionSuccess(results.city.name));
         dispatch(getForecastSuccess());
       } else {
         dispatch(getForecastFailed());

@@ -3,16 +3,23 @@ import { connect } from 'react-redux';
 import '../../assets/stylesheets/components/Map.sass';
 import PropTypes from 'prop-types';
 
-const Map = ({ coordinates }) => (
-  <div className="Forecast-block background">
-    <div className="Forecast-block-timeline">
-      {+coordinates && JSON.parse(coordinates)}
-    </div>
-  </div>
-);
+const Map = ({ coordinates }) => {
+  if (coordinates.lan) {
+    return (
+      <div className="Forecast-block background">
+        <div className="Forecast-block-timeline">
+          {coordinates.lan && JSON.parse(coordinates)}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div />
+  );
+};
 
 Map.propTypes = {
-  coordinates: PropTypes.objectOf(PropTypes.string),
+  coordinates: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 };
 
 Map.defaultProps = {
