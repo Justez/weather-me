@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
+import axios from 'axios';
 import { calcForecast } from './functions/calcForecast';
+import { findCityInCookies } from './functions/cookieRegistry';
 
 export const setLocationAction = details => (dispatch) => {
   dispatch({
@@ -66,12 +68,11 @@ const setBrowserLocationSuccess = () => ({
 const getWeatherForecastByCoords = coords => (dispatch) => {
   dispatch(getForecastStarted());
   const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${coords.lat}&lon=${coords.lng}&units=metric&type=accurate&mode=json0&APPID=9bbaed744c5bf102556c1d6b1c8e1ed8`;
-  fetch(url)
-    .then(response => response.json())
+  axios.get(url)
     .then((results) => {
-      if (results.cod === '200') {
-        dispatch(calcForecast(results));
-        dispatch(placeDescriptionSuccess(results.city.name));
+      if (results.status === 200 && results.data.cod === '200') {
+        dispatch(calcForecast(results.data));
+        dispatch(placeDescriptionSuccess(results.data.city.name));
         dispatch(getForecastSuccess());
       } else {
         dispatch(getForecastFailed());
@@ -86,15 +87,11 @@ const getWeatherForecastByCoords = coords => (dispatch) => {
 const getWeatherConditionsByCoords = coords => (dispatch) => {
   dispatch(getWeatherStarted());
   const url = `http://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&type=accurate&units=metric&appid=a429ae35ba6d0809fa7eecb77a605911`;
-  fetch(url)
-    .then(response => response.json())
+  axios.get(url)
     .then((results) => {
-      if (results.cod === 200) {
-        const cookies = document.cookie && Array.isArray(JSON.parse(document.cookie))
-          ? JSON.parse(document.cookie) : [];
-        const favorited = cookies.find(cookie => cookie.country === results.sys.country
-          && cookie.cities.find(city => city.id === results.sys.id));
-        const output = { ...results, favorite: favorited ? '1' : '0' };
+      if (results.data.cod === 200 && results.status === 200) {
+        const favorite = findCityInCookies(results.data.sys.id, results.data.sys.country);
+        const output = { ...results.data, favorite };
         dispatch(setCurrentWeather(output));
         dispatch(getWeatherSuccess());
       } else {
@@ -106,7 +103,6 @@ const getWeatherConditionsByCoords = coords => (dispatch) => {
       dispatch(getWeatherFailed());
     });
 };
-
 
 export const getBrowserLocationAction = () => (dispatch) => {
   dispatch(navigatorStarted());

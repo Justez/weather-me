@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import '../assets/stylesheets/containers/App.sass';
 import Navigation from './containers/Navigation';
 import Main from './containers/Main';
-import { getBrowserLocationAction } from './redux/actions';
+import { getBrowserLocationAction } from './redux/actions/weatherActions';
 
 class App extends React.Component {
   componentDidMount() {
