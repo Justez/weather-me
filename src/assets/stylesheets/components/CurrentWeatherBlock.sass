@@ -1,0 +1,59 @@
+.Current-weather
+  font-size: calc(0.8em + 1vmin)
+  margin-top: 1vh
+  padding: 2vh 0 2vh 0
+  text-align: center
+
+  svg
+    font-size: calc(0.8em + 1vw)
+    padding-left: 2vw
+    color: lightGrey
+    &.favorite
+      color: #FFFF66
+
+  .Current-weather-block
+    display: inline-flex
+    align-items: center
+    min-height: 15vh
+
+    span
+      display: inline-flex
+      flex-direction: column
+      justify-content: center
+
+    .weather
+      display: inline-table
+      font-size: 0.8em
+
+    .temperature
+      flex-direction: row
+      .number
+        font-weight: lighter
+        font-size: 3em
+      .sign
+        margin-top: 2vh
+
+  .Current-weather-lower-block
+    text-align: left
+    font-size: 0.7em
+    flex-direction: column
+
+@media only screen and (max-width: 800px)
+  .Current-weather
+    // width: 96vw
+    span
+      width: 32vw
+    .Current-weather-lower-block
+      padding-left: 32vw
+@media only screen and (min-width: 801px) and (max-width: 1200px)
+  .Current-weather
+    span
+      width: 12vw
+    .Current-weather-lower-block
+      padding-left: 12vw
+@media only screen and (min-width: 1201px) and (max-width: 1980px)
+  .Current-weather
+    span
+      width: 12vw
+    .Current-weather-lower-block
+      padding-left: 12vw

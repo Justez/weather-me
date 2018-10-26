@@ -1,0 +1,57 @@
+.Forecast-block
+  margin-top: 1vh
+  font-size: 0.7em
+
+  .Forecast-block-timeline
+    padding: 1vh 2vw 2vh 2vw
+    display: inline-flex
+    .weather-column
+      display: inline-flex
+      align-items: center
+      flex-direction: column
+      &:not(.first)
+        padding-left: 1vw
+
+      .Forecast-block-date
+        border-bottom: 1px solid lightGrey
+        padding: 1vh 1vw 1vh 1vw
+
+      img
+        margin: 2vh 0 3vh 0
+
+      .Forecast-block-weather-poll
+        margin-bottom: 2vh
+        padding-bottom: 2vh
+        width: 2vmin
+        background: #4169E1
+        border-radius: 6px
+
+@media only screen and (max-width: 800px)
+  .Forecast-block
+    width: 96vw
+    .Forecast-block-timeline
+      .weather-column
+        width: 17.6vw
+        img
+          width: 10vw
+          height: 10vw
+
+@media only screen and (min-width: 801px) and (max-width: 1200px)
+  .Forecast-block
+    width: 36vw
+    .Forecast-block-timeline
+      .weather-column
+        width: 5.6vw
+        img
+          width: 3vw
+          height: 3vw
+
+@media only screen and (min-width: 1201px) and (max-width: 1980px)
+  .Forecast-block
+    width: 36vw
+    .Forecast-block-timeline
+      .weather-column
+        width: 5.6vw
+        img
+          width: 3vw
+          height: 3vw
