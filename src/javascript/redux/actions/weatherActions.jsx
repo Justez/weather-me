@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
 import { calcForecast } from './functions/calcForecast';
-import { findCityInCookies } from './functions/cookieRegistry';
+import { isCityFavoriteInStorage } from './functions/storageRegistry';
 
 export const setLocationAction = details => (dispatch) => {
   dispatch({
@@ -90,10 +90,12 @@ const getWeatherConditionsByCoords = coords => (dispatch) => {
   axios.get(url)
     .then((results) => {
       if (results.data.cod === 200 && results.status === 200) {
-        const favorite = findCityInCookies(results.data.sys.id, results.data.sys.country);
-        const output = { ...results.data, favorite };
-        dispatch(setCurrentWeather(output));
-        dispatch(getWeatherSuccess());
+        isCityFavoriteInStorage(results.data.sys.id, results.data.sys.country)
+          .then((favorite) => {
+            const output = { ...results.data, favorite };
+            dispatch(setCurrentWeather(output));
+            dispatch(getWeatherSuccess());
+          });
       } else {
         dispatch(getWeatherFailed());
       }

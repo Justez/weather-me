@@ -4,7 +4,7 @@ import '../../assets/stylesheets/components/CurrentWeatherBlock.sass';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { setCityFavoriteAction } from '../redux/actions/searchActions';
+import { changeCityFavoriteAction } from '../redux/actions/cityActions';
 
 const dayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];
@@ -97,7 +97,7 @@ CurrentWeatherBlock.defaultProps = {
 
 const mapDispatchToProps = dispatch => ({
   setCityFavorite: (id, name, countryCode) => {
-    dispatch(setCityFavoriteAction(id, name, countryCode));
+    dispatch(changeCityFavoriteAction(id, name, countryCode));
   },
 });
 

@@ -21,14 +21,20 @@ const ForecastBlock = ({ forecast, weatherIcons }) => {
                 src={weatherIcons[weather.weatherIcon]}
               />
               <div>
+                {`${(weather.rain.mm).toFixed(1)} mm`}
+              </div>
+              <div>
+                {`${weather.wind} km/h`}
+              </div>
+              <p>
                 {weather.tempMax}
                 &#8451;
-              </div>
+              </p>
               <div
                 className="Forecast-block-weather-poll"
                 style={{
                   height: `${weather.tempMax - weather.tempMin}vh`,
-                  marginTop: `${weather.highestTemp - weather.tempMax + 2}vh`,
+                  marginTop: `${weather.highestTemp - weather.tempMax + 1}vh`,
                 }}
               />
               <div>
