@@ -19,7 +19,7 @@ const CurrentWeatherBlock = ({ weather, weatherIcons, changeCityFavorite }) => {
           <FontAwesomeIcon
             className={`${weather.favorite === '1' ? 'favorite' : ''}`}
             icon={faStar}
-            onClick={() => changeCityFavorite(weather.sys.id, weather.name, 'LT')}
+            onClick={() => changeCityFavorite(weather.id, weather.name, 'LT')}
           />
         </div>
         <div className="Current-weather-block">

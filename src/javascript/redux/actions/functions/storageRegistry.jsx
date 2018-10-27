@@ -12,6 +12,16 @@ export const getCityStorage = () => {
   }
 };
 
+const setCityStorage = (storage) => {
+  document.cookie = JSON.stringify(storage);
+};
+
+const getCountry = async (countryCode) => {
+  const storage = await getCityStorage();
+  const country = storage.find(coo => coo.country === countryCode);
+  return country;
+};
+
 export const isCityFavoriteInStorage = async (cityCode, country) => {
   const storage = await getCityStorage();
   const favorited = storage.find(cookie => cookie.country === country
@@ -19,14 +29,53 @@ export const isCityFavoriteInStorage = async (cityCode, country) => {
   return favorited;
 };
 
-// export const addCityToStorage = async (cityCode, name, countryCode) => {
-//
-// }
+export const findCityInStorage = async (id, countryCode) => {
+  const country = await getCountry(countryCode);
+  return country && country.cities ? country.cities.find(city => city.id === id) : 0;
+};
 
-export const findCityInStorage = (cityStorage, id, countryCode) => {
-  const country = cityStorage.find(coo => coo.country === countryCode);
-  if (country.cities) {
-    return country.cities.find(city => city.id === id);
+const updateCountry = async (countryDetails, countryCode) => {
+  let storage = await getCityStorage();
+  const index = storage.findIndex(country => country.country === countryCode);
+  if (countryDetails && countryDetails.cities && countryDetails.cities.length > 0) {
+    if (index) {
+      storage.push(countryDetails);
+    } else {
+      storage[index] = countryDetails;
+    }
+  } else {
+    storage = storage.filter(country => country.country !== countryCode);
   }
-  return '0';
+  await setCityStorage(storage);
+};
+
+export const addCityToFavorites = async (id, name, countryCode) => {
+  const country = await getCountry(countryCode);
+
+  let payload = {};
+  if (country && country.cities) {
+    if (!country.cities.find(city => city.id === id)) {
+      payload = country.cities;
+      payload.push({ id, name });
+      payload = { ...country, cities: payload };
+    }
+  } else {
+    payload = {
+      country: countryCode,
+      cities: [{ id, name }],
+    };
+  }
+  updateCountry(payload, countryCode);
+};
+
+export const removeCityFromFavorites = async (id, countryCode) => {
+  let country = await getCountry(countryCode);
+  if (country.cities) {
+    const cities = country.cities.filter(city => city.id !== id);
+    country = {
+      ...country,
+      cities,
+    };
+  }
+  updateCountry(country, countryCode);
 };
