@@ -1,7 +1,46 @@
 .Map-wrapper
   margin-top: 1vh
-  padding: 0 2vw 0 2vw
-  min-height: 60vh
+  height: 80vh
+  .Map
+    height: 80vh
+
+    .Map-info
+      height: 8vh
+      width: 10vh
+      background-color: white
+      border: 1px
+      border-radius: 8vh
+      color: black
+      display: inline-block
+      position: relative
+      margin-top: 3vh
+
+    .Map-info:before
+      content: ''
+      display: block
+      position: absolute
+      left: 20px
+      bottom: 100%
+      width: 0
+      height: 0
+      border: 10px solid transparent
+
+    .Map-info:after
+      content: ''
+      display: block
+      position: absolute
+      left: 21px
+      bottom: 100%
+      width: 0
+      height: 0
+      border: 9px solid transparent
+      border-bottom-color: white
+
+    .Map-info-details
+      img
+        width: 6vh
+        padding-left: 2vh
+        padding-top: 1vh
 
 @media only screen and (min-width: 801px) and (max-width: 1200px)
   .Map-wrapper
