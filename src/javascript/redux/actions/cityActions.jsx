@@ -33,8 +33,7 @@ export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) =>
           dispatch(changeCityFavorite());
           dispatch(changeCityFavoriteSuccess());
         })
-        .catch((err) => {
-          console.warn(err);
+        .catch(() => {
           dispatch(changeCityFavoriteFailed());
         });
     });

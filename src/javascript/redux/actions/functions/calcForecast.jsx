@@ -74,7 +74,7 @@ const calcForecast = (forecast = []) => (dispatch) => {
       let weatherIcon = '01d';
       let weatherDescription = 'Sunny';
 
-      if (result[i].rain.mm < 0.5 && result[i].rain.times < 1) {
+      if (result[i].rain.mm < 0.5 && result[i].rain.times < 2) {
         // TODO: mostly sunny, or just cloudy
         if (result[i].cloudy < 40) {
           weatherIcon = '02d';
@@ -86,7 +86,7 @@ const calcForecast = (forecast = []) => (dispatch) => {
           weatherIcon = '04d';
           weatherDescription = 'Broken clouds';
         }
-      } else if (result[i].rain.mm <= 1 && result[i].rain.times <= 3) {
+      } else if (result[i].rain.mm <= 1.2 && result[i].rain.times <= 3) {
         // TODO: light rain, half of day sunny, other light shower
         if (result[i].cloudy < 80) {
           weatherIcon = '03d';

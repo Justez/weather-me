@@ -7,7 +7,6 @@ export const getCityStorage = () => {
         && JSON.parse(document.cookie)
       : [];
   } catch (err) {
-    console.warn(err);
     return undefined;
   }
 };

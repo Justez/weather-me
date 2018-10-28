@@ -78,8 +78,7 @@ const getWeatherForecastByCoords = coords => (dispatch) => {
         dispatch(getForecastFailed());
       }
     })
-    .catch((error) => {
-      console.warn(error);
+    .catch(() => {
       dispatch(getForecastFailed());
     });
 };
@@ -100,8 +99,7 @@ const getWeatherConditionsByCoords = coords => (dispatch) => {
         dispatch(getWeatherFailed());
       }
     })
-    .catch((err) => {
-      console.warn(err);
+    .catch(() => {
       dispatch(getWeatherFailed());
     });
 };
