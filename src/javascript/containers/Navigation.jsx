@@ -3,15 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../../assets/stylesheets/containers/Navigation.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSearch,
-  faCloudSun,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faCloudSun, faStar } from '@fortawesome/free-solid-svg-icons';
 
 class Navigation extends React.Component {
-  handleSearch(event) {
-    console.log(event.target.value, this.props);
+  componentDidMount() {
+
   }
 
   render() {
@@ -26,10 +22,8 @@ class Navigation extends React.Component {
         <div className="Navigation-search">
           <FontAwesomeIcon icon={faSearch} />
           <input
-            defaultValue={placeDescription}
             id="search"
-            onChange={this.handleSearch.bind(this)}
-            placeholder="Search..."
+            placeholder={placeDescription || 'Search...'}
           />
         </div>
         <div className="Navigation-favorites">

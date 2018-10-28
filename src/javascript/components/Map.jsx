@@ -4,11 +4,11 @@ import '../../assets/stylesheets/components/Map.sass';
 import PropTypes from 'prop-types';
 
 const Map = ({ coordinates }) => {
-  if (coordinates.lan) {
+  if (coordinates.lat) {
     return (
-      <div className="Forecast-block background">
-        <div className="Forecast-block-timeline">
-          {coordinates.lan && JSON.parse(coordinates)}
+      <div className="Map-wrapper background">
+        <div className="Map">
+          {coordinates.lat && JSON.stringify(coordinates)}
         </div>
       </div>
     );

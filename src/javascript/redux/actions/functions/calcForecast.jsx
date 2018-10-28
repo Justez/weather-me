@@ -35,7 +35,7 @@ const calcForecast = (forecast = []) => (dispatch) => {
 
     for (let i = 0; i < 5; i += 1) {
       let date = new Date(d.getTime() + (i * 24 * 60 * 60 * 1000));
-      date = `${date.getFullYear()}-${String(date.getMonth() + 1).substr(-2)}-${String(date.getDate()).substr(-2)}`;
+      date = `${date.getFullYear()}-${`0${String(date.getMonth() + 1)}`.substr(-2)}-${`0${String(date.getDate())}`.substr(-2)}`;
       forecast.list.forEach((item) => {
         if (item.dt_txt.includes(date)) {
           const hour = item.dt_txt.slice(-8, -6);
@@ -57,7 +57,7 @@ const calcForecast = (forecast = []) => (dispatch) => {
         }
       });
 
-      highestTemp = result[i].tempMax > highestTemp ? result[i].tempMax : highestTemp;
+      highestTemp = Math.max(result[i].tempMax, highestTemp);
 
       result[i] = {
         ...result[i],
