@@ -9,23 +9,23 @@ import Map from '../components/Map';
 
 class Main extends React.Component {
   componentDidMount() {
-
   }
 
   render() {
     const { loader } = this.props;
 
+    if (loader) {
+      return (
+        <div className="loading">
+          Loading...
+        </div>
+      );
+    }
+
     return (
       <div className="Main">
         <div className="Main-content">
           <div className="Main-data-column">
-            {loader
-              && (
-                <div className="loading">
-                Loading...
-                </div>
-              )
-            }
             <CurrentWeatherBlock />
             <ForecastBlock />
             <CurrentWeatherDetails />
@@ -44,20 +44,6 @@ const mapStateToProps = state => ({
 });
 
 Main.propTypes = {
-  // forecast: PropTypes.arrayOf(PropTypes.objectOf(
-  //   PropTypes.oneOfType([
-  //     PropTypes.objectOf(PropTypes.oneOfType([
-  //       PropTypes.number,
-  //       PropTypes.string,
-  //     ])),
-  //     PropTypes.number,
-  //     PropTypes.string,
-  //     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-  //       PropTypes.number,
-  //       PropTypes.string,
-  //     ]))),
-  //   ]),
-  // )),
   loader: PropTypes.bool,
 };
 
