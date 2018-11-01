@@ -1,8 +1,21 @@
 .Navigation
   display: inline-flex
 
+  button
+    color: inherit
+    background: none
+    border-radius: 6px
+    border: none
+    padding: 0
+    font: inherit
+    cursor: pointer
+    outline: inherit
+    
+  button.active
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))
+
   .Navigation-name
-    width: 25vw
+    width: 21vw
     display: inline-flex
     flex-direction: row
     align-items: center
@@ -26,6 +39,8 @@
     align-items: center
     text-align: center
     justify-content: center
+    margin-left: 2vw
+    margin-right: 2vw
 
     svg
       font-size: calc(0.2em + 2vmax)

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import '../assets/stylesheets/containers/App.sass';
 import Navigation from './containers/Navigation';
 import Main from './containers/Main';
+import Favorites from './containers/Favorites';
 import { getLocationWeatherAction } from './redux/actions/weatherActions';
 
 class App extends React.Component {
@@ -14,11 +15,15 @@ class App extends React.Component {
   }
 
   render() {
+    const { pageNumber } = this.props;
+
     return (
       <div className="App">
         <Navigation />
-        <Main />
-
+        {pageNumber
+          ? <Favorites />
+          : <Main />
+        }
       </div>
     );
   }
@@ -32,6 +37,11 @@ const mapDispatchToProps = dispatch => ({
 
 App.propTypes = {
   getBrowserLocation: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
 };
 
-export default connect(undefined, mapDispatchToProps)(App);
+const mapStateToProps = state => ({
+  pageNumber: state.pages.number,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

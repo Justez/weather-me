@@ -1,6 +1,7 @@
 const initialState = {
   coordinates: {},
   currentWeather: {},
+  favoritesWeather: undefined,
   forecast: [],
   loader: false,
   placeDescription: '',
@@ -77,6 +78,11 @@ export default (state = initialState, action) => {
           ...state.currentWeather,
           favorite: state.currentWeather.favorite === '1' ? '0' : '1',
         },
+      };
+    case 'SET_FAVORITES_WEATHER':
+      return {
+        ...state,
+        favoritesWeather: action.payload,
       };
     default:
       return state;

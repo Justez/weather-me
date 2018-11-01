@@ -2,7 +2,7 @@ import {
   addCityToFavorites,
   findCityInStorage,
   removeCityFromFavorites,
-} from './functions/storageRegistry';
+} from './utils/storageRegistry';
 
 const changeCityFavoriteStarted = () => ({
   type: 'CHANGE_CITY_FAVORITE_STARTED',
