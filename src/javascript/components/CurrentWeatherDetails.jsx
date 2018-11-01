@@ -28,7 +28,7 @@ const CurrentWeatherDetails = ({ weather, weatherIcons }) => {
             {`Current Weather: ${weather.weather[0].main}`}
           </div>
           <div>
-            {`Temperature: ${weather.main.temp}`}
+            {`Temperature: ${Math.round(weather.main.temp)}`}
             &#8451;
           </div>
           <div>

@@ -1,5 +1,6 @@
 const initialState = {
   coordinates: {},
+  currentWeather: {},
   forecast: [],
   loader: false,
   placeDescription: '',
@@ -39,7 +40,10 @@ export default (state = initialState, action) => {
     case 'SET_LOCATION_COORDS':
       return {
         ...state,
-        coordinates: action.payload,
+        coordinates: {
+          lat: action.payload.lat,
+          lng: action.payload.lng,
+        },
       };
     case 'SET_PLACE_DESCRIPTION':
       return {

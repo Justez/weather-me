@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import '../assets/stylesheets/containers/App.sass';
 import Navigation from './containers/Navigation';
 import Main from './containers/Main';
-import { getBrowserLocationAction } from './redux/actions/weatherActions';
+import { getLocationWeatherAction } from './redux/actions/weatherActions';
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,7 +26,7 @@ class App extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getBrowserLocation: () => {
-    dispatch(getBrowserLocationAction());
+    dispatch(getLocationWeatherAction());
   },
 });
 

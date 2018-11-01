@@ -61,7 +61,7 @@ const getForecastFailed = () => ({
   type: 'GET_FORECAST_FAILED',
 });
 
-const setBrowserLocationSuccess = () => ({
+const setLocationWeatherSuccess = () => ({
   type: 'SET_BROWSER_LOCATION_SUCCESS',
 });
 
@@ -104,24 +104,31 @@ const getWeatherConditionsByCoords = coords => (dispatch) => {
     });
 };
 
-export const getBrowserLocationAction = () => (dispatch) => {
-  dispatch(navigatorStarted());
-  if ('geolocation' in navigator) {
-    let koord = {};
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        koord = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        dispatch(navigatorSuccess(koord));
-        dispatch(getWeatherConditionsByCoords(koord));
-        dispatch(getWeatherForecastByCoords(koord));
-        dispatch(setBrowserLocationSuccess());
-      },
-      () => dispatch(navigatorFailed()),
-    );
+export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
+  if (!coords) {
+    let koord;
+    dispatch(navigatorStarted());
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          koord = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          dispatch(navigatorSuccess(koord));
+          dispatch(getWeatherConditionsByCoords(koord));
+          dispatch(getWeatherForecastByCoords(koord));
+          dispatch(setLocationWeatherSuccess());
+        },
+        () => dispatch(navigatorFailed()),
+      );
+    } else {
+      dispatch(navigatorAbsent());
+    }
   } else {
-    dispatch(navigatorAbsent());
+    dispatch(navigatorSuccess(coords));
+    dispatch(getWeatherConditionsByCoords(coords));
+    dispatch(getWeatherForecastByCoords(coords));
+    dispatch(setLocationWeatherSuccess());
   }
 };
