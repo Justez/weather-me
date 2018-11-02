@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/components/ForecastBlock.sass';
-import PropTypes from 'prop-types';
+import { forecastType, weatherIconType } from '../utils/types';
 
 const ForecastBlock = ({ forecast, weatherIcons }) => {
   if (forecast.length > 0) {
@@ -53,21 +53,8 @@ const ForecastBlock = ({ forecast, weatherIcons }) => {
 };
 
 ForecastBlock.propTypes = {
-  forecast: PropTypes.arrayOf(PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.objectOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ])),
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ]))),
-    ]),
-  )),
-  weatherIcons: PropTypes.objectOf(PropTypes.string),
+  forecast: forecastType,
+  weatherIcons: weatherIconType,
 };
 
 ForecastBlock.defaultProps = {

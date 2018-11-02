@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/components/CurrentWeatherBlock.sass';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { weatherType, weatherIconType, funcType } from '../utils/types';
 import { changeCityFavoriteAction } from '../redux/actions/cityActions';
 
 const dayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -72,27 +72,9 @@ const CurrentWeatherBlock = ({ weather, weatherIcons, changeCityFavorite }) => {
 };
 
 CurrentWeatherBlock.propTypes = {
-  changeCityFavorite: PropTypes.func.isRequired,
-  weather: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.objectOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ])),
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ]))),
-    ]),
-  ),
-  weatherIcons: PropTypes.objectOf(PropTypes.string),
-};
-
-CurrentWeatherBlock.defaultProps = {
-  weather: {},
-  weatherIcons: {},
+  changeCityFavorite: funcType.isRequired,
+  weather: weatherType.isRequired,
+  weatherIcons: weatherIconType.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

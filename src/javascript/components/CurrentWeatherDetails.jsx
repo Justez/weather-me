@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/components/CurrentWeatherDetails.sass';
-import PropTypes from 'prop-types';
+import { weatherType, weatherIconType } from '../utils/types';
 
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'];
 const getTimeFromUnix = (unix) => {
@@ -66,26 +66,8 @@ const CurrentWeatherDetails = ({ weather, weatherIcons }) => {
 };
 
 CurrentWeatherDetails.propTypes = {
-  weather: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.objectOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ])),
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string,
-      ]))),
-    ]),
-  ),
-  weatherIcons: PropTypes.objectOf(PropTypes.string),
-};
-
-CurrentWeatherDetails.defaultProps = {
-  weather: {},
-  weatherIcons: {},
+  weather: weatherType.isRequired,
+  weatherIcons: weatherIconType.isRequired,
 };
 
 const mapStateToProps = state => ({

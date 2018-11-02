@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import '../../assets/stylesheets/containers/Favorites.sass';
 import CurrentWeatherBlock from '../components/CurrentWeatherBlock';
 import { getFavoritesWeatherAction } from '../redux/actions/weatherActions';
+import { loaderType, funcType } from '../utils/types';
 
 class Favorites extends React.Component {
   componentDidMount() {
@@ -47,12 +47,8 @@ Favorites.propTypes = {
   //     ]))),
   //   ]),
   // )),
-  getFavoritesWeather: PropTypes.func.isRequired,
-  loader: PropTypes.bool.isRequired,
-};
-
-Favorites.defaultProps = {
-  // favoritesWeather: [],
+  getFavoritesWeather: funcType.isRequired,
+  loader: loaderType.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -1,58 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import '../../assets/stylesheets/containers/Navigation.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCloudSun, faStar } from '@fortawesome/free-solid-svg-icons';
 import { changePageAction } from '../redux/actions/pagesActions';
+import { placeDescriptionType, pageNumberType, funcType } from '../utils/types';
 
-class Navigation extends React.Component {
-  constructor() {
-    super();
-    this.changePage = this.changePage.bind(this);
-  }
+const Navigation = ({ setPage, placeDescription, pageNumber }) => {
+  const changePage = number => setPage(number);
 
-  changePage(number) {
-    const { setPage } = this.props;
-    setPage(number);
-  }
-
-  render() {
-    const { placeDescription, pageNumber } = this.props;
-
-    return (
-      <div className="Navigation">
-        <button
-          className={!pageNumber ? 'active' : ''}
-          onClick={() => this.changePage(0)}
-          type="button"
-        >
-          <div className="Navigation-name">
-            <FontAwesomeIcon icon={faCloudSun} />
-            <h2> Me</h2>
-          </div>
-        </button>
-        <div className="Navigation-search">
-          <FontAwesomeIcon icon={faSearch} />
-          <input
-            id="search"
-            placeholder={placeDescription || 'Search...'}
-          />
+  return (
+    <div className="Navigation">
+      <button
+        className={!pageNumber ? 'active' : ''}
+        onClick={() => changePage(0)}
+        type="button"
+      >
+        <div className="Navigation-name">
+          <FontAwesomeIcon icon={faCloudSun} />
+          <h2> Me</h2>
         </div>
-        <button
-          className={pageNumber ? 'active' : ''}
-          onClick={() => this.changePage(1)}
-          type="button"
-        >
-          <div className="Navigation-favorites">
-            <FontAwesomeIcon icon={faStar} />
-            <div>Favorites</div>
-          </div>
-        </button>
+      </button>
+      <div className="Navigation-search">
+        <FontAwesomeIcon icon={faSearch} />
+        <input
+          id="search"
+          placeholder={placeDescription || 'Search...'}
+          defaultValue={placeDescription}
+        />
       </div>
-    );
-  }
-}
+      <button
+        className={pageNumber ? 'active' : ''}
+        onClick={() => changePage(1)}
+        type="button"
+      >
+        <div className="Navigation-favorites">
+          <FontAwesomeIcon icon={faStar} />
+          <div>Favorites</div>
+        </div>
+      </button>
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   placeDescription: state.app.placeDescription,
@@ -60,9 +49,9 @@ const mapStateToProps = state => ({
 });
 
 Navigation.propTypes = {
-  placeDescription: PropTypes.string,
-  setPage: PropTypes.func.isRequired,
-  pageNumber: PropTypes.number,
+  placeDescription: placeDescriptionType,
+  setPage: funcType.isRequired,
+  pageNumber: pageNumberType,
 };
 
 Navigation.defaultProps = {
