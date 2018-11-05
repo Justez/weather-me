@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Favorites.sass';
-import CurrentWeatherBlock from '../components/CurrentWeatherBlock';
-import { getFavoritesWeatherAction } from '../redux/actions/weatherActions';
-import { loaderType, funcType } from '../utils/types';
+import FavoriteCountryBlock from '../components/FavoriteCountryBlock';
+import { getFavoritesAction } from '../redux/actions/placesActions';
+import { loaderType, funcType, storageType } from '../utils/types';
 
 class Favorites extends React.Component {
   componentDidMount() {
-    const { getFavoritesWeather } = this.props;
-    getFavoritesWeather();
+    const { getFavorites } = this.props;
+    getFavorites();
   }
 
   render() {
-    const { loader/* , favoritesWeather */ } = this.props;
+    const { loader, favorites } = this.props;
 
     if (loader) {
       return (
@@ -25,7 +25,13 @@ class Favorites extends React.Component {
     return (
       <div className="Favorites">
         <div className="Favorites-content">
-          <CurrentWeatherBlock />
+          {favorites.map(fav => (
+            <div key={fav.country}>
+              <FavoriteCountryBlock
+                details={fav}
+              />
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -33,32 +39,19 @@ class Favorites extends React.Component {
 }
 
 Favorites.propTypes = {
-  // favoritesWeather: PropTypes.arrayOf(PropTypes.objectOf(
-  //   PropTypes.oneOfType([
-  //     PropTypes.objectOf(PropTypes.oneOfType([
-  //       PropTypes.number,
-  //       PropTypes.string,
-  //     ])),
-  //     PropTypes.number,
-  //     PropTypes.string,
-  //     PropTypes.arrayOf(PropTypes.objectOf(PropTypes.oneOfType([
-  //       PropTypes.number,
-  //       PropTypes.string,
-  //     ]))),
-  //   ]),
-  // )),
-  getFavoritesWeather: funcType.isRequired,
+  favorites: storageType.isRequired,
+  getFavorites: funcType.isRequired,
   loader: loaderType.isRequired,
 };
 
 const mapStateToProps = state => ({
-  favoritesWeather: state.app.favoritesWeather,
+  favorites: state.app.favorites,
   loader: state.app.loader,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getFavoritesWeather: () => {
-    dispatch(getFavoritesWeatherAction());
+  getFavorites: () => {
+    dispatch(getFavoritesAction());
   },
 });
 

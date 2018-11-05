@@ -4,7 +4,7 @@ import '../../assets/stylesheets/components/CurrentWeatherBlock.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { weatherType, weatherIconType, funcType } from '../utils/types';
-import { changeCityFavoriteAction } from '../redux/actions/cityActions';
+import { changeCityFavoriteAction } from '../redux/actions/placesActions';
 
 const dayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];

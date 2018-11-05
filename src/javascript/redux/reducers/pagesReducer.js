@@ -1,5 +1,5 @@
 const initialState = {
-  number: 0, // 0 - main page, 1 - favorites
+  number: 1, // 0 - main page, 1 - favorites
 };
 
 export default (state = initialState, action) => {

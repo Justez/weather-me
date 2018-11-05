@@ -2,6 +2,7 @@ import {
   addCityToFavorites,
   findCityInStorage,
   removeCityFromFavorites,
+  getCityStorage,
 } from './utils/storageRegistry';
 
 const changeCityFavoriteStarted = () => ({
@@ -16,8 +17,13 @@ const changeCityFavoriteSuccess = () => ({
   type: 'CHANGE_CITY_FAVORITE_SUCCESS',
 });
 
-export const changeCityFavorite = () => ({
+const changeCityFavorite = () => ({
   type: 'CHANGE_CITY_FAVORITE',
+});
+
+const setFavorites = payload => ({
+  type: 'SET_FAVORITES',
+  payload,
 });
 
 export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
@@ -37,4 +43,9 @@ export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) =>
           dispatch(changeCityFavoriteFailed());
         });
     });
+};
+
+export const getFavoritesAction = () => (dispatch) => {
+  const storage = getCityStorage();
+  dispatch(setFavorites(storage));
 };

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { calcForecast } from './utils/calcForecast';
 // import { getWeatherById } from './utils/weatherApi';
-import { isCityFavoriteInStorage, getCityStorage } from './utils/storageRegistry';
+import { isCityFavoriteInStorage } from './utils/storageRegistry';
 
 export const setLocationAction = details => (dispatch) => {
   dispatch({
@@ -64,11 +64,6 @@ const getForecastFailed = () => ({
 
 const setLocationWeatherSuccess = () => ({
   type: 'SET_BROWSER_LOCATION_SUCCESS',
-});
-
-const setFavoritesWeather = payload => ({
-  type: 'SET_FAVORITES_WEATHER',
-  payload,
 });
 
 const getWeatherForecastByCoords = coords => (dispatch) => {
@@ -137,19 +132,4 @@ export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
     dispatch(getWeatherForecastByCoords(coords));
     dispatch(setLocationWeatherSuccess());
   }
-};
-
-export const getFavoritesWeatherAction = () => (dispatch) => {
-  dispatch(getWeatherStarted());
-  const storage = getCityStorage();
-  // TODO: use getWeatherById for async fetching one by one
-  const output = storage.map(country => ({
-    countryCode: country.country,
-    cities: country.cities,
-    weather: undefined,
-  }));
-
-  dispatch(setFavoritesWeather(output));
-  dispatch(getWeatherSuccess());
-  dispatch(getWeatherFailed());
 };
