@@ -5,6 +5,8 @@ const initialState = {
   forecast: [],
   loader: false,
   placeDescription: '',
+  searchQuery: '',
+  searchSuggestions: [],
   weatherIcons: {
     // clear sky
     '01d': 'https://image.flaticon.com/icons/png/128/861/861060.png',
@@ -61,7 +63,7 @@ export default (state = initialState, action) => {
         ...state,
         forecast: action.payload,
       };
-    case ('NAVIGATOR_STARTED' || 'SET_WEATHER_FORECAST_STARTED'):
+    case 'NAVIGATOR_STARTED':
       return {
         ...state,
         loader: true,
@@ -83,6 +85,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: action.payload,
+      };
+    case 'SET_SEARCH_QUERY':
+      return {
+        ...state,
+        searchQuery: action.payload,
+      };
+    case 'SET_SEARCH_SUGGESTIONS':
+      return {
+        ...state,
+        searchSuggestions: action.payload,
       };
     default:
       return state;

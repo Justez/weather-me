@@ -65,3 +65,26 @@
       font-size: calc(0.3em + 2vmax)
     div
       font-size: calc(6px + 1vmin)
+
+.Navigation-suggestions
+  margin: 0 0 0 0
+  margin-left: 22vw
+  background-color: white
+  width: 50vw
+  display: inline-block
+  .suggestions
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))
+    border-radius: 1vh
+    padding: 2vh 2vw 2vh 2vw
+    position: absolute
+    div
+      display: block
+      overflow: hidden
+      padding: 2px 0 2px 0
+    div:hover
+      color: lightblue
+      cursor: pointer
+
+@media only screen and (max-width: 600px)
+  .Navigation-suggestions
+    margin-left: 0
