@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../assets/stylesheets/components/FavoriteCountryBlock.sass';
 import { weatherIconType, cityType } from '../utils/types';
-import { getWeatherById } from '../redux/actions/utils/weatherApi';
+import { getWeatherById } from '../redux/helpers/weatherApi';
 
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];
 
@@ -31,15 +30,11 @@ class FavoriteCityBlock extends React.Component {
             {city.name}
           </div>
           <div className="Favorites-city-block">
-            <span className="temperature">
-              <div className="number">
-                {weather.main.temp}
-              </div>
-              <div className="sign">
-                &#8451;
-              </div>
-            </span>
-            <span className="weather">
+            <div className="temperature">
+              {weather.main.temp}
+              &#8451;
+            </div>
+            <div className="weather">
               <img
                 alt={weather.weather[0].description}
                 name={weather.weather[0].main}
@@ -49,19 +44,11 @@ class FavoriteCityBlock extends React.Component {
                 {weather.weather[0].description.charAt(0).toUpperCase()
                   + weather.weather[0].description.slice(1)}
               </div>
-            </span>
+            </div>
           </div>
           <div className="Favorites-city-lower-block">
-            <div>
-              {`Max: ${weather.main.temp_max}`}
-              &#8451;
-              {`. Min: ${weather.main.temp_min}`}
-              &#8451;
-            </div>
-            <div>
-              {`Wind: ${directions[((Math.floor((weather.wind.deg / 45) + 0.5) % 16))]} `}
-              {`${weather.wind.speed}km/h`}
-            </div>
+            {`Wind: ${directions[((Math.floor((weather.wind.deg / 45) + 0.5) % 16))]} `}
+            {`${weather.wind.speed}km/h`}
           </div>
         </div>
       );

@@ -3,7 +3,7 @@ import {
   findCityInStorage,
   removeCityFromFavorites,
   getCityStorage,
-} from './utils/storageRegistry';
+} from '../helpers/storageRegistry';
 
 const changeCityFavoriteStarted = () => ({
   type: 'CHANGE_CITY_FAVORITE_STARTED',
@@ -26,7 +26,7 @@ const setFavorites = payload => ({
   payload,
 });
 
-export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
+const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
   const isInStorage = findCityInStorage(id, countryCode);
   isInStorage
     .then((result) => {
@@ -45,7 +45,12 @@ export const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) =>
     });
 };
 
-export const getFavoritesAction = () => (dispatch) => {
+const getFavoritesAction = () => (dispatch) => {
   const storage = getCityStorage();
   dispatch(setFavorites(storage));
+};
+
+export {
+  changeCityFavoriteAction,
+  getFavoritesAction,
 };
