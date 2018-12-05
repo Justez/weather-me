@@ -10,9 +10,7 @@ import Map from '../components/Map';
 const Main = ({ loader }) => {
   if (loader) {
     return (
-      <div className="loading">
-        Loading...
-      </div>
+      <div className="loading">Loading...</div>
     );
   }
 
