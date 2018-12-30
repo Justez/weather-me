@@ -7,6 +7,7 @@ import Navigation from './containers/Navigation';
 import Main from './containers/Main';
 import Favorites from './containers/Favorites';
 import { getLocationWeatherAction } from './redux/actions/weatherActions';
+import { getCitySuggestionsAction } from './redux/actions/placesActions';
 
 class App extends React.Component {
   componentDidMount() {
@@ -15,28 +16,38 @@ class App extends React.Component {
   }
 
   render() {
-    const { pageNumber } = this.props;
+    const { pageNumber, getCitySuggestions } = this.props;
+    const handleClickOutside = () => {
+      getCitySuggestions('');
+    };
 
     return (
       <div className="App">
         <Navigation />
-        {pageNumber
-          ? <Favorites />
-          : <Main />
-        }
+        <div
+          onClick={handleClickOutside}
+          onKeyPress={handleClickOutside}
+          role="textbox"
+          tabIndex={0}
+        >
+          {pageNumber
+            ? <Favorites />
+            : <Main />
+          }
+        </div>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  getBrowserLocation: () => {
-    dispatch(getLocationWeatherAction());
-  },
+  getBrowserLocation: () => dispatch(getLocationWeatherAction()),
+  getCitySuggestions: query => dispatch(getCitySuggestionsAction(query)),
 });
 
 App.propTypes = {
   getBrowserLocation: PropTypes.func.isRequired,
+  getCitySuggestions: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,
 };
 

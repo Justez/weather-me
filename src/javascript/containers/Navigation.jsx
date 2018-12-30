@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Navigation.sass';
@@ -12,70 +13,90 @@ import {
   suggestionsType,
 } from '../utils/types';
 
-const Navigation = ({
-  setPage,
-  getCitySuggestions,
-  placeDescription,
-  pageNumber,
-  getCityDetails,
-  searchSuggestions,
-}) => {
-  const clickLink = ({ target: { id } }) => getCityDetails(id);
-  const changePage = number => setPage(number);
-  return (
-    <div>
-      <div className="Navigation">
-        <button
-          className={pageNumber ? '' : 'active'}
-          onClick={() => changePage(0)}
-          type="button"
-        >
-          <div className="Navigation-name">
-            <FontAwesomeIcon icon={faCloudSun} />
-            <h2> Me</h2>
+class Navigation extends React.Component {
+  componentDidUpdate({ placeDescription: oldName }) {
+    const { placeDescription } = this.props;
+    if (placeDescription !== oldName) {
+      document.getElementById('search').value = placeDescription;
+    }
+  }
+
+  render() {
+    const {
+      setPage,
+      getCitySuggestions,
+      placeDescription,
+      pageNumber,
+      getCityDetails,
+      searchSuggestions,
+    } = this.props;
+
+    const clickLink = ({ target: { id } }) => getCityDetails(id);
+
+    const changePage = number => setPage(number);
+
+    const handleKeyPress = e => (e.key === 'Enter' || e.key === 'Escape')
+      && searchSuggestions.length
+      && getCityDetails(searchSuggestions[0].href);
+
+    return (
+      <div>
+        <div className="Navigation">
+          <button
+            className={pageNumber ? '' : 'background'}
+            onClick={() => changePage(0)}
+            type="button"
+          >
+            <div className="Navigation-name">
+              <FontAwesomeIcon icon={faCloudSun} />
+              <h2> Me</h2>
+            </div>
+          </button>
+          <div className="Navigation-search">
+            <FontAwesomeIcon icon={faSearch} />
+            <input
+              defaultValue={placeDescription}
+              id="search"
+              placeholder={placeDescription || 'Search...'}
+              onChange={({ target: { value } }) => getCitySuggestions(value)}
+              onKeyUp={handleKeyPress}
+              type="search"
+            />
           </div>
-        </button>
-        <div className="Navigation-search">
-          <FontAwesomeIcon icon={faSearch} />
-          <input
-            id="search"
-            onChange={({ target: { value } }) => getCitySuggestions(value)}
-            placeholder={placeDescription || 'Search...'}
-          />
+          <button
+            className={pageNumber ? 'background' : ''}
+            onClick={() => changePage(1)}
+            type="button"
+          >
+            <div className="Navigation-favorites">
+              <FontAwesomeIcon icon={faStar} />
+              <div>Favorites</div>
+            </div>
+          </button>
         </div>
-        <button
-          className={pageNumber ? 'active' : ''}
-          onClick={() => changePage(1)}
-          type="button"
-        >
-          <div className="Navigation-favorites">
-            <FontAwesomeIcon icon={faStar} />
-            <div>Favorites</div>
+        {searchSuggestions.length > 0 && (
+          <div className="Navigation-suggestions">
+            <div className="suggestions">
+              {searchSuggestions.map(({ href, fullName }) => (
+                <div
+                  className="line"
+                  key={href}
+                  id={href}
+                  role="menuitem"
+                  onClick={clickLink}
+                  onKeyPress={clickLink}
+                  tabIndex={0}
+                >
+                  {fullName}
+                </div>
+              ))}
+            </div>
           </div>
-        </button>
+        )}
       </div>
-      {searchSuggestions.length > 0 && (
-        <div className="Navigation-suggestions">
-          <div className="suggestions">
-            {searchSuggestions.map(({ href, fullName }) => (
-              <div
-                className="line"
-                key={href}
-                id={href}
-                role="menuitem"
-                onClick={clickLink}
-                onKeyPress={clickLink}
-                tabIndex={0}
-              >
-                {fullName}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = ({ app, pages }) => ({
   placeDescription: app.placeDescription,

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { weatherIconType, cityType } from '../../utils/types';
+import { weatherIconType, cityType, funcType } from '../../utils/types';
 import { getWeatherById } from '../../redux/helpers/weatherApi';
+import { getCityDetailsAction } from '../../redux/actions/placesActions';
 
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];
 
@@ -18,12 +19,19 @@ class FavoriteCityBlock extends React.Component {
   }
 
   render() {
-    const { city, weatherIcons } = this.props;
+    const { city, weatherIcons, getCityDetails } = this.props;
     const { weather } = this.state;
+    const handleCitySelect = () => getCityDetails(city.id);
 
-    if (weather.main) {
+    if (weather && weather.main) {
       return (
-        <div className="background">
+        <div
+          className="Favorites-city background"
+          onClick={handleCitySelect}
+          role="menuItem"
+          onKeyPress={handleCitySelect}
+          tabIndex={0}
+        >
           <div>
             {city.name}
           </div>
@@ -52,7 +60,9 @@ class FavoriteCityBlock extends React.Component {
       );
     }
     return (
-      <div />
+      <div className="Favorites-city background">
+        Loading....
+      </div>
     );
   }
 }
@@ -60,8 +70,13 @@ class FavoriteCityBlock extends React.Component {
 FavoriteCityBlock.propTypes = {
   weatherIcons: weatherIconType.isRequired,
   city: cityType.isRequired,
+  getCityDetails: funcType.isRequired,
 };
 
 const mapStateToProps = ({ app: { weatherIcons } }) => ({ weatherIcons });
 
-export default connect(mapStateToProps)(FavoriteCityBlock);
+const mapDispatchToProps = dispatch => ({
+  getCityDetails: href => dispatch(getCityDetailsAction(href)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteCityBlock);

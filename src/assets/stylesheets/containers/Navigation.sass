@@ -1,3 +1,6 @@
+$gradient: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))
+$gradient-strong: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))
+
 .Navigation
   display: inline-flex
 
@@ -11,8 +14,9 @@
     cursor: pointer
     outline: inherit
 
-  button.active
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))
+  button:hover
+    cursor: pointer
+    background: $gradient
 
   .Navigation-name
     width: 21vw
@@ -71,18 +75,23 @@
   margin-left: 22vw
   background-color: white
   width: 50vw
-  display: inline-block
+  display: block
+  justify-content: center
+
   .suggestions
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))
+    background: $gradient-strong
     border-radius: 1vh
+    margin-top: 1vh
     padding: 2vh 2vw 2vh 2vw
     position: absolute
+
     div
       display: block
       overflow: hidden
       padding: 2px 0 2px 0
+
     div:hover
-      color: lightblue
+      color: lightsteelblue
       cursor: pointer
 
 @media only screen and (max-width: 600px)

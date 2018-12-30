@@ -26,10 +26,8 @@ class Favorites extends React.Component {
       <div className="Favorites">
         <div className="Favorites-content">
           {favorites.map(fav => (
-            <div key={fav.country}>
-              <FavoriteCountryBlock
-                details={fav}
-              />
+            <div key={fav.country} className="Favorites-country-block">
+              <FavoriteCountryBlock details={fav} />
             </div>
           ))}
         </div>

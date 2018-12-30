@@ -28,7 +28,7 @@ class FavoriteCountryBlock extends React.Component {
           {countryName || details.country}
         </div>
         {details.cities.map(city => (
-          <div key={city.id} className="Favorites-city">
+          <div key={city.id}>
             <FavoriteCityBlock city={city} />
           </div>
         ))}

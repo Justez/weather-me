@@ -1,21 +1,22 @@
-$gradient: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))
+$gradient-background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))
+$gradient: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))
 
 @media only screen and (max-width: 800px)
   img
     width: 10vw
   .App
     // http://drive.google.com/uc?export=view&id=1Z5nu6Bmp3Q89MLymVVksUG0SGNW4QA7o
-    background: $gradient, url("../../images/sunset-xs.jpg")
+    background: $gradient-background, url("../../images/sunset-xs.jpg")
 @media only screen and (min-width: 801px) and (max-width: 1200px)
   img
     width: 6vw
   .App
-    background: $gradient, url("http://drive.google.com/uc?export=view&id=1MyCj1xKW4oskDrrioRS1nyK682zdJKD2")
+    background: $gradient-background, url("http://drive.google.com/uc?export=view&id=1MyCj1xKW4oskDrrioRS1nyK682zdJKD2")
 @media only screen and (min-width: 1201px) and (max-width: 1980px)
   img
     width: 3vw
   .App
-    background: $gradient, url("http://drive.google.com/uc?export=view&id=1i4AJ5lyMuStO98oLrc9YjuGnk0AStZsZ")
+    background: $gradient-background, url("http://drive.google.com/uc?export=view&id=1i4AJ5lyMuStO98oLrc9YjuGnk0AStZsZ")
 
 .App
   background-position: center
@@ -25,6 +26,11 @@ $gradient: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))
   min-height: 100vh
   color: white
   padding: 2vh 2vw 2vh 2vw
+
+  .background
+    background: $gradient
+    border: 0.5px solid rgba(0, 0, 0, 0.4)
+    border-radius: 0.5vw
 
   .loading
     text-align: center

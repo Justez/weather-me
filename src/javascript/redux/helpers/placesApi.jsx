@@ -10,7 +10,9 @@ const getCitySuggestions = (query) => {
 };
 
 const getCityDetails = (url) => {
-  const output = axios.get(url)
+  const href = url.length > 10 ? url : `https://api.teleport.org/api/cities/geonameid:${url}/`;
+
+  const output = axios.get(href)
     .then(({ data, status }) => (status === 200 ? data : {}))
     .catch(error => error);
 

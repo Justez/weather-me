@@ -61,7 +61,7 @@ const getFavoritesAction = () => dispatch => dispatch(setFavorites(getCityStorag
 
 const getCitySuggestionsAction = value => (dispatch) => {
   dispatch(setSearchQuery(value));
-  if (value.length - 1) {
+  if (value.length > 1) {
     const response = getCitySuggestions(value);
     response
       .then(({ count, _embedded }) => {
@@ -74,6 +74,8 @@ const getCitySuggestionsAction = value => (dispatch) => {
         }
       })
       .catch(error => error);
+  } else {
+    dispatch(setSearchSuggestions([]));
   }
 };
 
