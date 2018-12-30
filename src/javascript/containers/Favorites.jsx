@@ -44,15 +44,13 @@ Favorites.propTypes = {
   loader: loaderType.isRequired,
 };
 
-const mapStateToProps = state => ({
-  favorites: state.app.favorites,
-  loader: state.app.loader,
+const mapStateToProps = ({ app: { favorites, loader } }) => ({
+  favorites,
+  loader,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getFavorites: () => {
-    dispatch(getFavoritesAction());
-  },
+  getFavorites: () => dispatch(getFavoritesAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

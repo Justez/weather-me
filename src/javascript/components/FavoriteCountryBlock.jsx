@@ -14,14 +14,9 @@ class FavoriteCountryBlock extends React.Component {
     const { details } = this.props;
 
     axios.get(`https://restcountries.eu/rest/v2/alpha/${details.country}`)
-      .then((results) => {
-        if (results.status === 200) {
-          this.setState({ countryName: results.data.name });
-        }
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
+      .then(({ status, data }) => (status === 200)
+        && this.setState({ countryName: data.name }))
+      .catch(err => err);
   }
 
   render() {

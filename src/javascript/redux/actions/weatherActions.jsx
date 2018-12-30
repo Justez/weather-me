@@ -35,21 +35,16 @@ export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
     dispatch(navigatorStarted());
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          koord = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
+        ({ coords: { latitude: lat, longitude: lng } }) => {
+          koord = { lat, lng };
           dispatch(navigatorSuccess(koord));
           dispatch(getWeatherConditionsByCoords(koord));
           dispatch(getWeatherForecastByCoords(koord));
           dispatch(setLocationWeatherSuccess());
         },
-        () => dispatch(navigatorFailed()),
+        () => dispatch(navigatorFailed())(),
       );
-    } else {
-      dispatch(navigatorAbsent());
-    }
+    } else dispatch(navigatorAbsent());
   } else {
     dispatch(navigatorSuccess(coords));
     dispatch(getWeatherConditionsByCoords(coords));

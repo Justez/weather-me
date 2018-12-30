@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const weatherType = PropTypes.objectOf(
+const weatherType = PropTypes.objectOf(
   PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.oneOfType([
       PropTypes.number,
@@ -15,13 +15,13 @@ export const weatherType = PropTypes.objectOf(
   ]),
 );
 
-export const forecastType = PropTypes.arrayOf(weatherType);
+const forecastType = PropTypes.arrayOf(weatherType);
 
-export const coordsType = PropTypes.objectOf(
+const coordsType = PropTypes.objectOf(
   PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 );
 
-export const storageType = PropTypes.arrayOf(PropTypes.objectOf(
+const storageType = PropTypes.arrayOf(PropTypes.objectOf(
   PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.objectOf(
@@ -30,7 +30,7 @@ export const storageType = PropTypes.arrayOf(PropTypes.objectOf(
   ]),
 ));
 
-export const storageItemType = PropTypes.objectOf(
+const storageItemType = PropTypes.objectOf(
   PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.objectOf(
@@ -39,19 +39,35 @@ export const storageItemType = PropTypes.objectOf(
   ]),
 );
 
-export const cityType = PropTypes.objectOf(
+const cityType = PropTypes.objectOf(
   PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
 );
 
-export const weatherIconType = PropTypes.objectOf(PropTypes.string);
-export const suggestionsType = PropTypes.arrayOf(PropTypes.objectOf(
+const weatherIconType = PropTypes.objectOf(PropTypes.string);
+const suggestionsType = PropTypes.arrayOf(PropTypes.objectOf(
   PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 ));
-export const loaderType = PropTypes.bool;
-export const iconType = PropTypes.string;
-export const placeDescriptionType = PropTypes.string;
-export const pageNumberType = PropTypes.number;
-export const funcType = PropTypes.func;
+const loaderType = PropTypes.bool;
+const iconType = PropTypes.string;
+const placeDescriptionType = PropTypes.string;
+const pageNumberType = PropTypes.number;
+const funcType = PropTypes.func;
+
+export {
+  weatherType,
+  forecastType,
+  coordsType,
+  storageType,
+  storageItemType,
+  cityType,
+  weatherIconType,
+  suggestionsType,
+  loaderType,
+  iconType,
+  placeDescriptionType,
+  pageNumberType,
+  funcType,
+};

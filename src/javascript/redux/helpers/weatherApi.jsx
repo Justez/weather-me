@@ -24,31 +24,27 @@ const getWeatherFailed = () => ({
 const getWeatherById = (id) => {
   const url = `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&type=accurate&APPID=9bbaed744c5bf102556c1d6b1c8e1ed8`;
   const output = axios.get(url)
-    .then(results => (results.status === 200 ? results.data : {}))
+    .then(({ data, status }) => (status === 200 ? data : {}))
     .catch(() => undefined);
 
   return output;
 };
 
-const getWeatherConditionsByCoords = coords => (dispatch) => {
+const getWeatherConditionsByCoords = ({ lat, lng }) => (dispatch) => {
   dispatch(getWeatherStarted());
-  const url = `http://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lng}&type=accurate&units=metric&appid=a429ae35ba6d0809fa7eecb77a605911`;
+  const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&type=accurate&units=metric&appid=a429ae35ba6d0809fa7eecb77a605911`;
   axios.get(url)
-    .then((results) => {
-      if (results.data.cod === 200 && results.status === 200) {
-        isCityFavoriteInStorage(results.data.id, results.data.sys.country)
+    .then(({ data, status }) => {
+      if (data.cod === 200 && status === 200) {
+        isCityFavoriteInStorage(data.id, data.sys.country)
           .then((favorite) => {
-            const output = { ...results.data, favorite };
+            const output = { ...data, favorite };
             dispatch(setCurrentWeather(output));
             dispatch(getWeatherSuccess());
           });
-      } else {
-        dispatch(getWeatherFailed());
-      }
+      } else dispatch(getWeatherFailed());
     })
-    .catch(() => {
-      dispatch(getWeatherFailed());
-    });
+    .catch(() => dispatch(getWeatherFailed()));
 };
 
 const placeDescriptionSuccess = place => ({
@@ -68,22 +64,18 @@ const getForecastFailed = () => ({
   type: 'GET_FORECAST_FAILED',
 });
 
-const getWeatherForecastByCoords = coords => (dispatch) => {
+const getWeatherForecastByCoords = ({ lat, lng }) => (dispatch) => {
   dispatch(getForecastStarted());
-  const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${coords.lat}&lon=${coords.lng}&units=metric&type=accurate&mode=json0&APPID=9bbaed744c5bf102556c1d6b1c8e1ed8`;
+  const url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&units=metric&type=accurate&mode=json0&APPID=9bbaed744c5bf102556c1d6b1c8e1ed8`;
   axios.get(url)
     .then((results) => {
       if (results.status === 200 && results.data.cod === '200') {
         dispatch(calcForecast(results.data));
         dispatch(placeDescriptionSuccess(results.data.city.name));
         dispatch(getForecastSuccess());
-      } else {
-        dispatch(getForecastFailed());
-      }
+      } else dispatch(getForecastFailed());
     })
-    .catch(() => {
-      dispatch(getForecastFailed());
-    });
+    .catch(() => dispatch(getForecastFailed()));
 };
 
 export {

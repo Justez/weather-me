@@ -15,7 +15,7 @@ const calcForecastDetailsFailed = () => ({
   type: 'CALC_FORECAST_DAILY_FAILED',
 });
 
-const calcForecast = (forecast = []) => (dispatch) => {
+const calcForecast = ({ list = [] }) => (dispatch) => {
   try {
     dispatch(calcForecastDetailsStarted());
     const result = Array(5).fill({
@@ -36,7 +36,7 @@ const calcForecast = (forecast = []) => (dispatch) => {
     for (let i = 0; i < 5; i += 1) {
       let date = new Date(d.getTime() + (i * 24 * 60 * 60 * 1000));
       date = `${date.getFullYear()}-${`0${String(date.getMonth() + 1)}`.substr(-2)}-${`0${String(date.getDate())}`.substr(-2)}`;
-      forecast.list.forEach((item) => {
+      list.forEach((item) => {
         if (item.dt_txt.includes(date)) {
           const hour = item.dt_txt.slice(-8, -6);
           result[i] = {
@@ -75,7 +75,6 @@ const calcForecast = (forecast = []) => (dispatch) => {
       let weatherDescription = 'Sunny';
 
       if (result[i].rain.mm < 0.5 && result[i].rain.times < 2) {
-        // TODO: mostly sunny, or just cloudy
         if (result[i].cloudy < 40) {
           weatherIcon = '02d';
           weatherDescription = 'Few clouds';
@@ -87,7 +86,6 @@ const calcForecast = (forecast = []) => (dispatch) => {
           weatherDescription = 'Broken clouds';
         }
       } else if (result[i].rain.mm <= 1.2 && result[i].rain.times <= 3) {
-        // TODO: light rain, half of day sunny, other light shower
         if (result[i].cloudy < 80) {
           weatherIcon = '03d';
           weatherDescription = 'Scattered clouds';
@@ -96,11 +94,9 @@ const calcForecast = (forecast = []) => (dispatch) => {
           weatherDescription = 'Rain';
         }
       } else if (result[i].rain.mm > 2 && result[i].rain.times > 3) {
-        // TODO: shitty weather light rain all day
         weatherIcon = '09d';
         weatherDescription = 'Shower rain';
       } else if (result[i].rain.mm > 1 && result[i].rain.times > 3) {
-        // TODO: shit im not going outside
         weatherIcon = '10d';
         weatherDescription = 'Rain';
       }

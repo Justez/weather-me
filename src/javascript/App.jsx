@@ -40,8 +40,8 @@ App.propTypes = {
   pageNumber: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = state => ({
-  pageNumber: state.pages.number,
+const mapStateToProps = ({ pages: { number: pageNumber } }) => ({
+  pageNumber,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

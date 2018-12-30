@@ -53,7 +53,8 @@ const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
       dispatch(changeCityFavoriteStarted());
 
       const response = result
-        ? removeCityFromFavorites(id, countryCode) : addCityToFavorites(id, name, countryCode);
+        ? removeCityFromFavorites(id, countryCode)
+        : addCityToFavorites(id, name, countryCode);
       response
         .then(() => {
           dispatch(changeCityFavorite());
@@ -65,46 +66,39 @@ const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
     });
 };
 
-const getFavoritesAction = () => (dispatch) => {
-  const storage = getCityStorage();
-  dispatch(setFavorites(storage));
-};
+const getFavoritesAction = () => dispatch => dispatch(setFavorites(getCityStorage()));
 
 const getCitySuggestionsAction = value => (dispatch) => {
   dispatch(setSearchQuery(value));
   if (value.length > 1) {
     const response = getCitySuggestions(value);
     response
-      .then((result) => {
-        if (result.count) {
-          const suggestions = result._embedded['city:search-results'].map(city => ({
+      .then(({ count, _embedded }) => {
+        if (count) {
+          const suggestions = _embedded['city:search-results'].map(city => ({
             href: city._links['city:item'].href,
             fullName: city.matching_full_name,
           }));
           dispatch(setSearchSuggestions(suggestions));
         }
       })
-      .catch((error) => {
-        console.warn(error);
-      });
+      .catch(error => error);
   }
 };
 
 const getCityDetailsAction = href => (dispatch) => {
   const response = getCityDetails(href);
   response
-    .then((result) => {
-      dispatch(setPlaceName(result.name));
+    .then(({ location: { latlon }, name }) => {
+      dispatch(setPlaceName(name));
       const coords = {
-        lat: result.location.latlon.latitude,
-        lng: result.location.latlon.longitude,
+        lat: latlon.latitude,
+        lng: latlon.longitude,
       };
       dispatch(setSearchSuggestions([]));
       dispatch(getLocationWeatherAction(coords));
     })
-    .catch((error) => {
-      console.warn(error);
-    });
+    .catch(error => error);
 };
 
 export {

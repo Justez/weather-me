@@ -4,7 +4,7 @@ import '../../assets/stylesheets/components/ForecastBlock.sass';
 import { forecastType, weatherIconType } from '../utils/types';
 
 const ForecastBlock = ({ forecast, weatherIcons }) => {
-  if (forecast.length > 0) {
+  if (forecast.length) {
     return (
       <div className="Forecast-block background">
         <div className="Forecast-block-timeline">
@@ -62,9 +62,9 @@ ForecastBlock.defaultProps = {
   weatherIcons: {},
 };
 
-const mapStateToProps = state => ({
-  weatherIcons: state.app.weatherIcons,
-  forecast: state.app.forecast,
+const mapStateToProps = ({ app: { weatherIcons, forecast } }) => ({
+  weatherIcons,
+  forecast,
 });
 
 export default connect(mapStateToProps, undefined)(ForecastBlock);

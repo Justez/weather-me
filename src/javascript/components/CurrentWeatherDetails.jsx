@@ -70,9 +70,9 @@ CurrentWeatherDetails.propTypes = {
   weatherIcons: weatherIconType.isRequired,
 };
 
-const mapStateToProps = state => ({
-  weatherIcons: state.app.weatherIcons,
-  weather: state.app.currentWeather,
+const mapStateToProps = ({ app: { currentWeather: weather, weatherIcons } }) => ({
+  weatherIcons,
+  weather,
 });
 
 export default connect(mapStateToProps, undefined)(CurrentWeatherDetails);

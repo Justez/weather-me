@@ -20,13 +20,13 @@ const Navigation = ({
   getCityDetails,
   searchSuggestions,
 }) => {
-  const clickLink = item => getCityDetails(item.target.id);
+  const clickLink = ({ target: { id } }) => getCityDetails(id);
   const changePage = number => setPage(number);
   return (
     <div>
       <div className="Navigation">
         <button
-          className={!pageNumber ? 'active' : ''}
+          className={pageNumber ? '' : 'active'}
           onClick={() => changePage(0)}
           type="button"
         >
@@ -40,7 +40,7 @@ const Navigation = ({
           <input
             defaultValue={placeDescription}
             id="search"
-            onChange={e => getCitySuggestions(e.target.value)}
+            onChange={({ target: { value } }) => getCitySuggestions(value)}
             placeholder={placeDescription || 'Search...'}
           />
         </div>
@@ -55,20 +55,20 @@ const Navigation = ({
           </div>
         </button>
       </div>
-      {searchSuggestions.length && (
+      {searchSuggestions.length > 0 && (
         <div className="Navigation-suggestions">
           <div className="suggestions">
-            {searchSuggestions.map(suggestion => (
+            {searchSuggestions.map(({ href, fullName }) => (
               <div
                 className="line"
-                key={suggestion.href}
-                id={suggestion.href}
+                key={href}
+                id={href}
                 role="menuitem"
                 onClick={clickLink}
                 onKeyPress={clickLink}
                 tabIndex={0}
               >
-                {suggestion.fullName}
+                {fullName}
               </div>
             ))}
           </div>
@@ -78,10 +78,10 @@ const Navigation = ({
   );
 };
 
-const mapStateToProps = state => ({
-  placeDescription: state.app.placeDescription,
-  searchSuggestions: state.app.searchSuggestions,
-  pageNumber: state.pages.number,
+const mapStateToProps = ({ app, pages }) => ({
+  placeDescription: app.placeDescription,
+  searchSuggestions: app.searchSuggestions,
+  pageNumber: pages.number,
 });
 
 Navigation.propTypes = {
@@ -100,15 +100,9 @@ Navigation.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setPage: (number) => {
-    dispatch(changePageAction(number));
-  },
-  getCitySuggestions: (value) => {
-    dispatch(getCitySuggestionsAction(value));
-  },
-  getCityDetails: (href) => {
-    dispatch(getCityDetailsAction(href));
-  },
+  setPage: number => dispatch(changePageAction(number)),
+  getCitySuggestions: value => dispatch(getCitySuggestionsAction(value)),
+  getCityDetails: href => dispatch(getCityDetailsAction(href)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

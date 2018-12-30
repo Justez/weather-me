@@ -30,8 +30,8 @@ const Main = ({ loader }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  loader: state.app.loader,
+const mapStateToProps = ({ app: { loader } }) => ({
+  loader,
 });
 
 Main.propTypes = { loader: loaderType };

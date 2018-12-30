@@ -24,13 +24,11 @@ const WeatherInfo = ({ icon, weatherIcons }) => (
 
 const Map = ({
   coordinates,
-  weather,
+  weather: { weather },
   weatherIcons,
   getLocationWeather,
 }) => {
-  const setCoords = (coords) => {
-    getLocationWeather(coords);
-  };
+  const setCoords = coords => getLocationWeather(coords);
 
   if (coordinates.lat) {
     return (
@@ -46,7 +44,7 @@ const Map = ({
             <WeatherInfo
               lat={coordinates.lat}
               lng={coordinates.lng}
-              icon={weather && weather.weather ? weather.weather[0].icon : ''}
+              icon={weather ? weather[0].icon : ''}
               weatherIcons={weatherIcons}
             />
           </GoogleMapReact>
@@ -71,10 +69,10 @@ WeatherInfo.propTypes = {
   weatherIcons: weatherIconType.isRequired,
 };
 
-const mapStateToProps = state => ({
-  coordinates: state.app.coordinates,
-  weather: state.app.currentWeather,
-  weatherIcons: state.app.weatherIcons,
+const mapStateToProps = ({ app }) => ({
+  coordinates: app.coordinates,
+  weather: app.currentWeather,
+  weatherIcons: app.weatherIcons,
 });
 
 const mapDispatchToProps = dispatch => ({

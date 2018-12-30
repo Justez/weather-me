@@ -8,14 +8,12 @@ const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'N
 class FavoriteCityBlock extends React.Component {
   constructor() {
     super();
-    this.state = {
-      weather: {},
-    };
+    this.state = { weather: {} };
   }
 
   componentDidMount() {
-    const { city } = this.props;
-    const results = getWeatherById(city.id);
+    const { city: { id } } = this.props;
+    const results = getWeatherById(id);
     results.then(result => this.setState({ weather: result }));
   }
 
@@ -64,8 +62,6 @@ FavoriteCityBlock.propTypes = {
   city: cityType.isRequired,
 };
 
-const mapStateToProps = state => ({
-  weatherIcons: state.app.weatherIcons,
-});
+const mapStateToProps = ({ app: { weatherIcons } }) => ({ weatherIcons });
 
 export default connect(mapStateToProps)(FavoriteCityBlock);
