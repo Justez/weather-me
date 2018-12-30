@@ -38,7 +38,6 @@ const Navigation = ({
         <div className="Navigation-search">
           <FontAwesomeIcon icon={faSearch} />
           <input
-            defaultValue={placeDescription}
             id="search"
             onChange={({ target: { value } }) => getCitySuggestions(value)}
             placeholder={placeDescription || 'Search...'}

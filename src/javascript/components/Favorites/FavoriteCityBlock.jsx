@@ -23,13 +23,13 @@ class FavoriteCityBlock extends React.Component {
 
     if (weather.main) {
       return (
-        <div className="Favorites-city background">
+        <div className="background">
           <div>
             {city.name}
           </div>
           <div className="Favorites-city-block">
             <div className="temperature">
-              {weather.main.temp}
+              {Math.round(weather.main.temp)}
               &#8451;
             </div>
             <div className="weather">

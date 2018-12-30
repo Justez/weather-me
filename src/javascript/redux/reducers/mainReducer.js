@@ -4,35 +4,27 @@ const initialState = {
   favorites: [],
   forecast: [],
   loader: false,
+  placeCountry: '',
   placeDescription: '',
   searchQuery: '',
   searchSuggestions: [],
   weatherIcons: {
-    // clear sky
     '01d': 'https://image.flaticon.com/icons/png/128/861/861060.png',
     '01n': 'https://image.flaticon.com/icons/png/128/1163/1163645.png',
-    // few clouds
     '02d': 'https://image.flaticon.com/icons/png/128/1200/1200427.png',
     '02n': 'https://image.flaticon.com/icons/png/128/1200/1200407.png',
-    // scattered clouds
     '03d': 'https://image.flaticon.com/icons/png/128/1200/1200405.png',
     '03n': 'https://image.flaticon.com/icons/png/128/1200/1200405.png',
-    // broken clouds
     '04d': 'https://image.flaticon.com/icons/png/128/1200/1200427.png',
     '04n': 'https://image.flaticon.com/icons/png/128/1182/1182978.png',
-    // shower rain
     '09d': 'https://image.flaticon.com/icons/png/128/1200/1200397.png',
     '09n': 'https://image.flaticon.com/icons/png/128/1200/1200397.png',
-    // rain
     '10d': 'https://image.flaticon.com/icons/png/128/1200/1200431.png',
     '10n': 'https://image.flaticon.com/icons/png/128/1200/1200431.png',
-    // thunderstorm
     '11d': 'https://image.flaticon.com/icons/png/128/1200/1200417.png',
     '11n': 'https://image.flaticon.com/icons/png/128/1200/1200401.png',
-    // snow
     '13d': 'https://image.flaticon.com/icons/png/128/1200/1200428.png',
     '13n': 'https://image.flaticon.com/icons/png/128/1200/1200428.png',
-    // mist
     '50d': 'https://image.flaticon.com/icons/png/128/1113/1113758.png',
     '50n': 'https://image.flaticon.com/icons/png/128/1113/1113758.png',
   },
@@ -52,6 +44,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         placeDescription: action.payload,
+      };
+    case 'SET_PLACE_COUNTRY':
+      return {
+        ...state,
+        placeCountry: action.payload,
       };
     case 'SET_CURRENT_WEATHER_FORECAST':
       return {

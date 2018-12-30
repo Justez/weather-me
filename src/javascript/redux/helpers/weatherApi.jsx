@@ -1,12 +1,9 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 import { isCityFavoriteInStorage } from './storageRegistry';
 import { calcForecast } from './calcForecast';
 
 const month = 'jan';
-
-const getWeatherStarted = () => ({
-  type: 'SET_WEATHER_STARTED',
-});
 
 const getWeatherSuccess = () => ({
   type: 'GET_WEATHER_FORECAST_SUCCESS',
@@ -17,8 +14,9 @@ const setCurrentWeather = weather => ({
   payload: weather,
 });
 
-const getWeatherFailed = () => ({
-  type: 'SET_WEATHER_FORECAST_FAILED',
+const setPlaceCountry = payload => ({
+  type: 'SET_PLACE_COUNTRY',
+  payload,
 });
 
 const getWeatherById = (id) => {
@@ -31,7 +29,6 @@ const getWeatherById = (id) => {
 };
 
 const getWeatherConditionsByCoords = ({ lat, lng }) => (dispatch) => {
-  dispatch(getWeatherStarted());
   const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&type=accurate&units=metric&appid=a429ae35ba6d0809fa7eecb77a605911`;
   axios.get(url)
     .then(({ data, status }) => {
@@ -39,12 +36,13 @@ const getWeatherConditionsByCoords = ({ lat, lng }) => (dispatch) => {
         isCityFavoriteInStorage(data.id, data.sys.country)
           .then((favorite) => {
             const output = { ...data, favorite };
+            dispatch(setPlaceCountry(data.sys.country));
             dispatch(setCurrentWeather(output));
             dispatch(getWeatherSuccess());
           });
-      } else dispatch(getWeatherFailed());
+      }
     })
-    .catch(() => dispatch(getWeatherFailed()));
+    .catch(() => {});
 };
 
 const placeDescriptionSuccess = place => ({

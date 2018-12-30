@@ -3,14 +3,25 @@ import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/CurrentWeatherBlock.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { weatherType, weatherIconType, funcType } from '../../utils/types';
 import { changeCityFavoriteAction } from '../../redux/actions/placesActions';
+
+import {
+  weatherType,
+  weatherIconType,
+  funcType,
+  stringType,
+} from '../../utils/types';
 
 const dayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];
 const today = new Date();
 
-const CurrentWeatherBlock = ({ weather, weatherIcons, changeCityFavorite }) => {
+const CurrentWeatherBlock = ({
+  changeCityFavorite,
+  placeCountry,
+  weather,
+  weatherIcons,
+}) => {
   if (weather.main) {
     return (
       <div className="Current-weather background">
@@ -19,7 +30,7 @@ const CurrentWeatherBlock = ({ weather, weatherIcons, changeCityFavorite }) => {
           <FontAwesomeIcon
             className={`${+weather.favorite ? 'favorite' : ''}`}
             icon={faStar}
-            onClick={() => changeCityFavorite(weather.id, weather.name, 'LT')}
+            onClick={() => changeCityFavorite(weather.id, weather.name, placeCountry)}
           />
         </div>
         <div className="Current-weather-block">
@@ -33,7 +44,7 @@ const CurrentWeatherBlock = ({ weather, weatherIcons, changeCityFavorite }) => {
           </span>
           <span className="temperature">
             <div className="number">
-              {weather.main.temp}
+              {Math.round(weather.main.temp)}
             </div>
             <div className="sign">
               &#8451;
@@ -75,6 +86,7 @@ CurrentWeatherBlock.propTypes = {
   changeCityFavorite: funcType.isRequired,
   weather: weatherType.isRequired,
   weatherIcons: weatherIconType.isRequired,
+  placeCountry: stringType.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -86,6 +98,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   weatherIcons: state.app.weatherIcons,
   weather: state.app.currentWeather,
+  placeCountry: state.app.placeCountry,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentWeatherBlock);

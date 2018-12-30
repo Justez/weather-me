@@ -10,18 +10,6 @@ import { getLocationWeatherAction } from './weatherActions';
 
 import { getCitySuggestions, getCityDetails } from '../helpers/placesApi';
 
-const changeCityFavoriteStarted = () => ({
-  type: 'CHANGE_CITY_FAVORITE_STARTED',
-});
-
-const changeCityFavoriteFailed = () => ({
-  type: 'CHANGE_CITY_FAVORITE_FAILED',
-});
-
-const changeCityFavoriteSuccess = () => ({
-  type: 'CHANGE_CITY_FAVORITE_SUCCESS',
-});
-
 const changeCityFavorite = () => ({
   type: 'CHANGE_CITY_FAVORITE',
 });
@@ -36,6 +24,11 @@ const setSearchQuery = payload => ({
   payload,
 });
 
+const setMainPage = () => ({
+  type: 'SET_PAGE_NUMBER',
+  payload: 0,
+});
+
 const setSearchSuggestions = payload => ({
   type: 'SET_SEARCH_SUGGESTIONS',
   payload,
@@ -46,23 +39,21 @@ const setPlaceName = payload => ({
   payload,
 });
 
+const setPlaceCountry = payload => ({
+  type: 'SET_PLACE_COUNTRY',
+  payload,
+});
+
 const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
   const isInStorage = findCityInStorage(id, countryCode);
   isInStorage
     .then((result) => {
-      dispatch(changeCityFavoriteStarted());
-
       const response = result
         ? removeCityFromFavorites(id, countryCode)
         : addCityToFavorites(id, name, countryCode);
       response
-        .then(() => {
-          dispatch(changeCityFavorite());
-          dispatch(changeCityFavoriteSuccess());
-        })
-        .catch(() => {
-          dispatch(changeCityFavoriteFailed());
-        });
+        .then(() => dispatch(changeCityFavorite()))
+        .catch(() => {});
     });
 };
 
@@ -70,7 +61,7 @@ const getFavoritesAction = () => dispatch => dispatch(setFavorites(getCityStorag
 
 const getCitySuggestionsAction = value => (dispatch) => {
   dispatch(setSearchQuery(value));
-  if (value.length > 1) {
+  if (value.length - 1) {
     const response = getCitySuggestions(value);
     response
       .then(({ count, _embedded }) => {
@@ -89,12 +80,12 @@ const getCitySuggestionsAction = value => (dispatch) => {
 const getCityDetailsAction = href => (dispatch) => {
   const response = getCityDetails(href);
   response
-    .then(({ location: { latlon }, name }) => {
+    .then(({ location: { latlon }, name, _links: { 'city:country': { href: countryCodeLink } } }) => {
+      const countryCode = countryCodeLink.slice(-3, -1);
+      const coords = { lat: latlon.latitude, lng: latlon.longitude };
+      dispatch(setMainPage());
       dispatch(setPlaceName(name));
-      const coords = {
-        lat: latlon.latitude,
-        lng: latlon.longitude,
-      };
+      dispatch(setPlaceCountry(countryCode));
       dispatch(setSearchSuggestions([]));
       dispatch(getLocationWeatherAction(coords));
     })

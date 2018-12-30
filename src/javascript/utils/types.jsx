@@ -52,22 +52,24 @@ const suggestionsType = PropTypes.arrayOf(PropTypes.objectOf(
 ));
 const loaderType = PropTypes.bool;
 const iconType = PropTypes.string;
+const stringType = PropTypes.string;
 const placeDescriptionType = PropTypes.string;
 const pageNumberType = PropTypes.number;
 const funcType = PropTypes.func;
 
 export {
-  weatherType,
-  forecastType,
-  coordsType,
-  storageType,
-  storageItemType,
   cityType,
-  weatherIconType,
-  suggestionsType,
-  loaderType,
-  iconType,
-  placeDescriptionType,
-  pageNumberType,
+  coordsType,
+  forecastType,
   funcType,
+  iconType,
+  loaderType,
+  pageNumberType,
+  placeDescriptionType,
+  storageItemType,
+  storageType,
+  stringType,
+  suggestionsType,
+  weatherIconType,
+  weatherType,
 };
