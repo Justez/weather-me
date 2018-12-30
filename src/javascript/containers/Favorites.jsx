@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Favorites.sass';
-import FavoriteCountryBlock from '../components/FavoriteCountryBlock';
+import FavoriteCountryBlock from '../components/Favorites/FavoriteCountryBlock';
 import { getFavoritesAction } from '../redux/actions/placesActions';
 import { loaderType, funcType, storageType } from '../utils/types';
 

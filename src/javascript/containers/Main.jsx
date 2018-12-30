@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Main.sass';
 import { loaderType } from '../utils/types';
-import CurrentWeatherBlock from '../components/CurrentWeatherBlock';
-import CurrentWeatherDetails from '../components/CurrentWeatherDetails';
-import ForecastBlock from '../components/ForecastBlock';
-import Map from '../components/Map';
+import CurrentWeatherBlock from '../components/Main/CurrentWeatherBlock';
+import CurrentWeatherDetails from '../components/Main/CurrentWeatherDetails';
+import ForecastBlock from '../components/Main/ForecastBlock';
+import Map from '../components/Main/Map';
 
 const Main = ({ loader }) => {
   if (loader) {

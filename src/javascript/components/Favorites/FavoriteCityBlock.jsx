@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { weatherIconType, cityType } from '../utils/types';
-import { getWeatherById } from '../redux/helpers/weatherApi';
+import { weatherIconType, cityType } from '../../utils/types';
+import { getWeatherById } from '../../redux/helpers/weatherApi';
 
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW', 'North'];
 

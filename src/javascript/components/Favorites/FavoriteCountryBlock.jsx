@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import '../../assets/stylesheets/components/FavoriteCountryBlock.sass';
-import { storageItemType } from '../utils/types';
+import { storageItemType } from '../../utils/types';
 import FavoriteCityBlock from './FavoriteCityBlock';
 
 class FavoriteCountryBlock extends React.Component {

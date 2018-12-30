@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
-import '../../assets/stylesheets/components/Map.sass';
-import { getLocationWeatherAction } from '../redux/actions/weatherActions';
+import '../../../assets/stylesheets/components/Main/Map.sass';
+import { getLocationWeatherAction } from '../../redux/actions/weatherActions';
 import {
   weatherType,
   weatherIconType,
   coordsType,
   funcType,
   iconType,
-} from '../utils/types';
+} from '../../utils/types';
 
 const WeatherInfo = ({ icon, weatherIcons }) => (
   <div className="Map-info">

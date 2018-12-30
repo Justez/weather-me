@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../assets/stylesheets/components/CurrentWeatherDetails.sass';
-import { weatherType, weatherIconType } from '../utils/types';
+import '../../../assets/stylesheets/components/Main/CurrentWeatherDetails.sass';
+import { weatherType, weatherIconType } from '../../utils/types';
 
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'];
 const getTimeFromUnix = (unix) => {
