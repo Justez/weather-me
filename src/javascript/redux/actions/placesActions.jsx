@@ -1,13 +1,12 @@
 /* eslint-disable no-underscore-dangle */
+
 import {
   addCityToFavorites,
   findCityInStorage,
   removeCityFromFavorites,
   getCityStorage,
 } from '../helpers/storageRegistry';
-
 import { getLocationWeatherAction } from './weatherActions';
-
 import { getCitySuggestions, getCityDetails } from '../helpers/placesApi';
 
 const changeCityFavorite = () => ({
@@ -52,8 +51,7 @@ const changeCityFavoriteAction = (id, name, countryCode) => (dispatch) => {
         ? removeCityFromFavorites(id, countryCode)
         : addCityToFavorites(id, name, countryCode);
       response
-        .then(() => dispatch(changeCityFavorite()))
-        .catch(() => {});
+        .then(() => dispatch(changeCityFavorite()));
     });
 };
 
@@ -72,8 +70,7 @@ const getCitySuggestionsAction = value => (dispatch) => {
           }));
           dispatch(setSearchSuggestions(suggestions));
         }
-      })
-      .catch(error => error);
+      });
   } else {
     dispatch(setSearchSuggestions([]));
   }
@@ -90,8 +87,7 @@ const getCityDetailsAction = href => (dispatch) => {
       dispatch(setPlaceCountry(countryCode));
       dispatch(setSearchSuggestions([]));
       dispatch(getLocationWeatherAction(coords));
-    })
-    .catch(error => error);
+    });
 };
 
 export {

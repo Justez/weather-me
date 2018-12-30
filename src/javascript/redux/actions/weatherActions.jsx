@@ -17,14 +17,6 @@ const navigatorSuccess = payload => ({
   payload,
 });
 
-const navigatorFailed = () => ({
-  type: 'NAVIGATOR_FAILED',
-});
-
-const navigatorAbsent = () => ({
-  type: 'NAVIGATOR_IS_NOT_AVAILABLE',
-});
-
 const setLocationWeatherSuccess = () => ({
   type: 'SET_BROWSER_LOCATION_SUCCESS',
 });
@@ -40,9 +32,8 @@ export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
           dispatch(getWeatherForecastByCoords({ lat, lng }));
           dispatch(setLocationWeatherSuccess());
         },
-        () => dispatch(navigatorFailed()),
       );
-    } else dispatch(navigatorAbsent());
+    }
   } else {
     dispatch(getWeatherConditionsByCoords(coords));
     dispatch(getWeatherForecastByCoords(coords));

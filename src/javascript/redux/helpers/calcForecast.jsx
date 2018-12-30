@@ -1,23 +1,10 @@
-const calcForecastDetailsStarted = () => ({
-  type: 'CALC_FORECAST_DAILY_STARTED',
-});
-
-const calcForecastDetailsSuccess = () => ({
-  type: 'CALC_FORECAST_DAILY_SUCCESS',
-});
-
 const setForecastDaily = forecast => ({
   type: 'SET_FORECAST_DAILY',
   payload: forecast,
 });
 
-const calcForecastDetailsFailed = () => ({
-  type: 'CALC_FORECAST_DAILY_FAILED',
-});
-
 const calcForecast = ({ list = [] }) => (dispatch) => {
   try {
-    dispatch(calcForecastDetailsStarted());
     const result = Array(5).fill({
       weatherIcon: '',
       weatherDescription: '',
@@ -116,10 +103,10 @@ const calcForecast = ({ list = [] }) => (dispatch) => {
     });
 
     dispatch(setForecastDaily(result));
-    dispatch(calcForecastDetailsSuccess());
   } catch (err) {
-    dispatch(calcForecastDetailsFailed());
+    return err;
   }
+  return true;
 };
 
 export {

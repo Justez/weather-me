@@ -14,8 +14,7 @@ class FavoriteCountryBlock extends React.Component {
 
     axios.get(`https://restcountries.eu/rest/v2/alpha/${details.country}`)
       .then(({ status, data }) => (status === 200)
-        && this.setState({ countryName: data.name }))
-      .catch(err => err);
+        && this.setState({ countryName: data.name }));
   }
 
   render() {
@@ -37,9 +36,6 @@ class FavoriteCountryBlock extends React.Component {
   }
 }
 
-FavoriteCountryBlock.propTypes = {
-  details: storageItemType.isRequired,
-};
-
+FavoriteCountryBlock.propTypes = { details: storageItemType.isRequired };
 
 export default FavoriteCountryBlock;

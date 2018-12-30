@@ -59,10 +59,7 @@ export const addCityToFavorites = async (id, name, countryCode) => {
       payload = { ...country, cities: payload };
     }
   } else {
-    payload = {
-      country: countryCode,
-      cities: [{ id, name }],
-    };
+    payload = { country: countryCode, cities: [{ id, name }] };
   }
   updateCountry(payload, countryCode);
 };
@@ -71,10 +68,7 @@ export const removeCityFromFavorites = async (id, countryCode) => {
   let country = await getCountry(countryCode);
   if (country.cities) {
     const cities = country.cities.filter(city => city.id !== id);
-    country = {
-      ...country,
-      cities,
-    };
+    country = { ...country, cities };
   }
   updateCountry(country, countryCode);
 };

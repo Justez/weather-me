@@ -95,10 +95,10 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const mapStateToProps = state => ({
-  weatherIcons: state.app.weatherIcons,
-  weather: state.app.currentWeather,
-  placeCountry: state.app.placeCountry,
+const mapStateToProps = ({ app }) => ({
+  weatherIcons: app.weatherIcons,
+  weather: app.currentWeather,
+  placeCountry: app.placeCountry,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentWeatherBlock);

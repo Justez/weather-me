@@ -30,11 +30,8 @@ const Main = ({ loader }) => {
   );
 };
 
-const mapStateToProps = ({ app: { loader } }) => ({
-  loader,
-});
+const mapStateToProps = ({ app: { loader } }) => ({ loader });
 
-Main.propTypes = { loader: loaderType };
-Main.defaultProps = { loader: false };
+Main.propTypes = { loader: loaderType.isRequired };
 
-export default connect(mapStateToProps, undefined)(Main);
+export default connect(mapStateToProps)(Main);

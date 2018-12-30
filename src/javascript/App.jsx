@@ -23,6 +23,13 @@ class App extends React.Component {
     }
   }
 
+  componentDidUpdate({ pageNumber: prevPageNumber }) {
+    const { pageNumber } = this.props;
+    if (prevPageNumber !== pageNumber) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }
+
   render() {
     const { pageNumber, getCitySuggestions } = this.props;
     const handleClickOutside = () => getCitySuggestions('');

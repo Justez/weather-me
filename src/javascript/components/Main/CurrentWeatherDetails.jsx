@@ -4,6 +4,7 @@ import '../../../assets/stylesheets/components/Main/CurrentWeatherDetails.sass';
 import { weatherType, weatherIconType } from '../../utils/types';
 
 const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'];
+
 const getTimeFromUnix = (unix) => {
   const date = new Date(unix * 1000);
   const hours = date.getHours();
