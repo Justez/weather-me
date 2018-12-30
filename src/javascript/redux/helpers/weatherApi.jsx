@@ -17,7 +17,7 @@ const placeDescriptionSuccess = place => ({
   payload: place,
 });
 
-const base = 'http://api.openweathermap.org/data/2.5/';
+const base = 'https://api.openweathermap.org/data/2.5/';
 
 const getWeatherById = (id) => {
   const url = `${base}weather?id=${id}&units=metric&type=accurate&APPID=9bbaed744c5bf102556c1d6b1c8e1ed8`;

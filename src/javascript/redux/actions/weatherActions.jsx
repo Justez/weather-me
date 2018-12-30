@@ -30,11 +30,12 @@ export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
           dispatch(navigatorSuccess({ lat, lng }));
           dispatch(getWeatherConditionsByCoords({ lat, lng }));
           dispatch(getWeatherForecastByCoords({ lat, lng }));
-          dispatch(setLocationWeatherSuccess());
         },
       );
     }
+    dispatch(setLocationWeatherSuccess());
   } else {
+    dispatch(navigatorSuccess(coords));
     dispatch(getWeatherConditionsByCoords(coords));
     dispatch(getWeatherForecastByCoords(coords));
     dispatch(setLocationWeatherSuccess());

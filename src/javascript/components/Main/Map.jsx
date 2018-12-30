@@ -11,21 +11,17 @@ class Map extends React.Component {
   }
 
   componentDidUpdate({ coordinates, weatherIcons }) {
-    this.map = new google.maps.Map(document.getElementById('map'), {
-      center: coordinates.lat ? coordinates : { lat: 54.687157, lng: 25.279652 },
-      zoom: 11,
-    });
-    const marker = new google.maps.InfoWindow({
-      position: coordinates,
-      icon: weatherIcons[0],
-    });
-    marker.setMap(this.map);
-  }
-
-  componentReceivedProps({ coordinates: coords }) {
-    const { coordinates } = this.props;
-    if (JSON.stringify(coordinates) !== JSON.stringify(coords)) {
-      this.setState({});
+    // { lat: 54.687157, lng: 25.279652 }
+    if ('lat' in coordinates) {
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        center: coordinates,
+        zoom: 11,
+      });
+      const marker = new google.maps.InfoWindow({
+        position: coordinates,
+        icon: weatherIcons[0],
+      });
+      marker.setMap(this.map);
     }
   }
 

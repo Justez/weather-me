@@ -83,10 +83,10 @@ const getCityDetailsAction = href => (dispatch) => {
       const countryCode = countryCodeLink.slice(-3, -1);
       const coords = { lat: latlon.latitude, lng: latlon.longitude };
       dispatch(setMainPage());
+      dispatch(getLocationWeatherAction(coords));
       dispatch(setPlaceName(name));
       dispatch(setPlaceCountry(countryCode));
       dispatch(setSearchSuggestions([]));
-      dispatch(getLocationWeatherAction(coords));
     });
 };
 
