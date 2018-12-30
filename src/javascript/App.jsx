@@ -13,13 +13,19 @@ class App extends React.Component {
   componentDidMount() {
     const { getBrowserLocation } = this.props;
     getBrowserLocation();
+
+    if (!('maps' in window.google)) {
+      const script = document.createElement('script');
+      const API = 'AIzaSyDbAz1XXxDoKSU2nZXec89rcHPxgkvVoiw';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&callback=resolveGoogleMapsPromise`;
+      script.async = true;
+      document.body.appendChild(script);
+    }
   }
 
   render() {
     const { pageNumber, getCitySuggestions } = this.props;
-    const handleClickOutside = () => {
-      getCitySuggestions('');
-    };
+    const handleClickOutside = () => getCitySuggestions('');
 
     return (
       <div className="App">

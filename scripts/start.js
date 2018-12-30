@@ -37,6 +37,23 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
+if (process.env.HOST) {
+  console.log(
+    chalk.cyan(
+      `Attempting to bind to HOST environment variable: ${chalk.yellow(
+        chalk.bold(process.env.HOST)
+      )}`
+    )
+  );
+  console.log(
+    `If this was unintentional, check that you haven't mistakenly set it in your shell.`
+  );
+  console.log(
+    `Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`
+  );
+  console.log();
+}
+
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {

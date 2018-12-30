@@ -62,6 +62,7 @@ checkBrowsers(paths.appPath, isInteractive)
         );
         console.log(
           'To ignore, add ' +
+            chalk.cyan('// eslint-disable-next-line') +
             ' to the line before.\n'
         );
       } else {

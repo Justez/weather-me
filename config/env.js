@@ -13,12 +13,15 @@ if (!NODE_ENV) {
   );
 }
 
+var dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
   NODE_ENV !== 'test' && `${paths.dotenv}.local`,
   paths.dotenv,
 ].filter(Boolean);
 
+dotenvFiles.forEach(dotenvFile => {
+  if (fs.existsSync(dotenvFile)) {
     require('dotenv-expand')(
       require('dotenv').config({
         path: dotenvFile,
@@ -26,7 +29,9 @@ if (!NODE_ENV) {
     );
   }
 });
-
+const appDirectory = fs.realpathSync(process.cwd());
+process.env.NODE_PATH = (process.env.NODE_PATH || '')
+  .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
   .map(folder => path.resolve(appDirectory, folder))
   .join(path.delimiter);

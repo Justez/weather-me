@@ -1,71 +1,51 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { connect } from 'react-redux';
-import GoogleMapReact from 'google-map-react';
 import '../../../assets/stylesheets/components/Main/Map.sass';
-import { getLocationWeatherAction } from '../../redux/actions/weatherActions';
-import {
-  weatherType,
-  weatherIconType,
-  coordsType,
-  funcType,
-  iconType,
-} from '../../utils/types';
+import { weatherIconType, coordsType } from '../../utils/types';
 
-const WeatherInfo = ({ icon, weatherIcons }) => (
-  <div className="Map-info">
-    <div className="Map-info-details">
-      <img
-        alt={icon}
-        src={weatherIcons[icon]}
-      />
-    </div>
-  </div>
-);
+class Map extends React.Component {
+  constructor(props) {
+    super(props);
+    this.map = null;
+  }
 
-const Map = ({
-  coordinates,
-  weather: { weather },
-  weatherIcons,
-  getLocationWeather,
-}) => {
-  const setCoords = coords => getLocationWeather(coords);
+  componentDidUpdate({ coordinates, weatherIcons }) {
+    this.map = new google.maps.Map(document.getElementById('map'), {
+      center: coordinates.lat ? coordinates : { lat: 54.687157, lng: 25.279652 },
+      zoom: 11,
+    });
+    const marker = new google.maps.InfoWindow({
+      position: coordinates,
+      icon: weatherIcons[0],
+    });
+    marker.setMap(this.map);
+  }
 
-  if (coordinates.lat) {
-    return (
-      <div className="Map-wrapper background">
-        <div className="Map">
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: '' }}
-            defaultCenter={{ lat: 54.687157, lng: 25.279652 }}
-            center={coordinates}
-            defaultZoom={11}
-            onClick={coords => setCoords(coords)}
-          >
-            <WeatherInfo
-              lat={coordinates.lat}
-              lng={coordinates.lng}
-              icon={weather ? weather[0].icon : ''}
-              weatherIcons={weatherIcons}
-            />
-          </GoogleMapReact>
+  componentReceivedProps({ coordinates: coords }) {
+    const { coordinates } = this.props;
+    if (JSON.stringify(coordinates) !== JSON.stringify(coords)) {
+      this.setState({});
+    }
+  }
+
+  render() {
+    const { coordinates } = this.props;
+    if (coordinates.lat) {
+      return (
+        <div className="Map-wrapper background">
+          <div className="Map" id="map" />
         </div>
-      </div>
+      );
+    }
+    return (
+      <div />
     );
   }
-  return (
-    <div />
-  );
-};
+}
 
 Map.propTypes = {
   coordinates: coordsType.isRequired,
-  getLocationWeather: funcType.isRequired,
-  weather: weatherType.isRequired,
-  weatherIcons: weatherIconType.isRequired,
-};
-
-WeatherInfo.propTypes = {
-  icon: iconType.isRequired,
   weatherIcons: weatherIconType.isRequired,
 };
 
@@ -75,8 +55,4 @@ const mapStateToProps = ({ app }) => ({
   weatherIcons: app.weatherIcons,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getLocationWeather: coords => dispatch(getLocationWeatherAction(coords)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps)(Map);
