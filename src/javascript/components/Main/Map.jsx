@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/Map.sass';
 import {
@@ -20,7 +19,7 @@ class Map extends React.Component {
     const {
       coordinates,
       weatherIcons,
-      weather: { weather },
+      weather: { weather, main },
       getLocationWeather,
     } = this.props;
 
@@ -42,13 +41,18 @@ class Map extends React.Component {
         if (weather) {
           const marker = new google.maps.InfoWindow({
             position: coordinates,
-            content: `<div id="Map-content">
-            <div id="bodyContent">
-            <img
-            alt="${weather ? weather[0].icon : ''}"
-            src="${weatherIcons[weather ? weather[0].icon : '']}"
-            />
-            </div>
+            content: `<div id="Map-content bodyContent">
+              <span className="Map-content-icon">
+                <img
+                  alt="${weather ? weather[0].icon : ''}"
+                  src="${weather ? weatherIcons[weather[0].icon] : ''}"
+                />
+              </span>
+              ${main ? `
+                <span>
+                  ${Math.round(main.temp)}
+                  &#8451;
+                </span>` : ''}
             </div>`,
           });
 
