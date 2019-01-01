@@ -14,7 +14,7 @@ class App extends React.Component {
     const { getBrowserLocation } = this.props;
     getBrowserLocation();
 
-    if (!('maps' in window.google)) {
+    if (!(window.google && window.google.maps)) {
       const script = document.createElement('script');
       const API = 'AIzaSyDbAz1XXxDoKSU2nZXec89rcHPxgkvVoiw';
       script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&callback=resolveGoogleMapsPromise`;
