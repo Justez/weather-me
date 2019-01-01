@@ -2,7 +2,13 @@
 
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/Map.sass';
-import { weatherIconType, coordsType } from '../../utils/types';
+import {
+  coordsType,
+  funcType,
+  weatherIconType,
+  weatherType,
+} from '../../utils/types';
+import { getLocationWeatherAction } from '../../redux/actions/weatherActions';
 
 class Map extends React.Component {
   constructor(props) {
@@ -10,35 +16,47 @@ class Map extends React.Component {
     this.map = null;
   }
 
-  componentDidUpdate({ coordinates, weatherIcons, weather: { weather } }) {
-    // { lat: 54.687157, lng: 25.279652 }
-    if ('lat' in coordinates && window.google) {
-      this.map = new google.maps.Map(document.getElementById('map'), {
-        center: coordinates,
-        zoom: 11,
-      });
-
-      const marker = new google.maps.InfoWindow({
-        position: coordinates,
-        content: `<div id="Map-content">
-            <div id="siteNotice">
-              notice
-            </div>
-            <div id="bodyContent">
-              <img
-                alt="${weather ? weather[0].icon : ''}"
-                src="${weatherIcons[weather ? weather[0].icon : '']}"
-              />
-            </div>
-          </div>`,
-      });
-
-      marker.setMap(this.map);
-    }
-  }
-
   render() {
-    const { coordinates } = this.props;
+    const {
+      coordinates,
+      weatherIcons,
+      weather: { weather },
+      getLocationWeather,
+    } = this.props;
+
+    if (coordinates.lat && window.google) {
+      if (this.map) {
+        google.maps.event.clearInstanceListeners(this.map);
+      }
+
+      if (document.getElementById('map')) {
+        this.map = new google.maps.Map(document.getElementById('map'), {
+          center: coordinates,
+          zoom: 9,
+        });
+
+        google.maps.event.addListener(this.map, 'click', (event) => {
+          getLocationWeather({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+        });
+
+        if (weather) {
+          const marker = new google.maps.InfoWindow({
+            position: coordinates,
+            content: `<div id="Map-content">
+            <div id="bodyContent">
+            <img
+            alt="${weather ? weather[0].icon : ''}"
+            src="${weatherIcons[weather ? weather[0].icon : '']}"
+            />
+            </div>
+            </div>`,
+          });
+
+          marker.setMap(this.map);
+        }
+      }
+    }
+
     if (coordinates.lat) {
       return (
         <div className="Map-wrapper background">
@@ -54,7 +72,9 @@ class Map extends React.Component {
 
 Map.propTypes = {
   coordinates: coordsType.isRequired,
+  weather: weatherType.isRequired,
   weatherIcons: weatherIconType.isRequired,
+  getLocationWeather: funcType.isRequired,
 };
 
 const mapStateToProps = ({ app }) => ({
@@ -63,4 +83,8 @@ const mapStateToProps = ({ app }) => ({
   weatherIcons: app.weatherIcons,
 });
 
-export default connect(mapStateToProps)(Map);
+const mapDispatchToProps = dispatch => ({
+  getLocationWeather: coords => dispatch(getLocationWeatherAction(coords)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
