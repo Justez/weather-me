@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-undef */
+
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/ForecastBlock.sass';
 import { forecastType, weatherIconType } from '../../utils/types';

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-undef */
+
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Favorites.sass';
 import FavoriteCountryBlock from '../components/Favorites/FavoriteCountryBlock';

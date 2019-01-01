@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable no-undef */
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/CurrentWeatherDetails.sass';
 import { weatherType, weatherIconType } from '../../utils/types';

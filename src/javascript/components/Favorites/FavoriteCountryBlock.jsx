@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable no-undef */
 import axios from 'axios';
 import { storageItemType } from '../../utils/types';
 import FavoriteCityBlock from './FavoriteCityBlock';

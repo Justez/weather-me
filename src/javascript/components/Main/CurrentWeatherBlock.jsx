@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable no-undef */
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/CurrentWeatherBlock.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -64,9 +64,9 @@ const CurrentWeatherBlock = ({
         </div>
         <div className="Current-weather-lower-block">
           <div>
-            {`Max: ${weather.main.temp_max}`}
+            {`Max: ${Math.round(weather.main.temp_max)}`}
             &#8451;
-            {`. Min: ${weather.main.temp_min}`}
+            {`. Min: ${Math.round(weather.main.temp_min)}`}
             &#8451;
           </div>
           <div>

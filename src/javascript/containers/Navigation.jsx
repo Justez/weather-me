@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React from 'react';
+
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Navigation.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

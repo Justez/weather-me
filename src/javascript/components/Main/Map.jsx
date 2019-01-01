@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React from 'react';
+
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/Map.sass';
 import { weatherIconType, coordsType } from '../../utils/types';
@@ -10,17 +10,29 @@ class Map extends React.Component {
     this.map = null;
   }
 
-  componentDidUpdate({ coordinates, weatherIcons }) {
+  componentDidUpdate({ coordinates, weatherIcons, weather: { weather } }) {
     // { lat: 54.687157, lng: 25.279652 }
-    if ('lat' in coordinates) {
+    if ('lat' in coordinates && window.google) {
       this.map = new google.maps.Map(document.getElementById('map'), {
         center: coordinates,
         zoom: 11,
       });
+
       const marker = new google.maps.InfoWindow({
         position: coordinates,
-        icon: weatherIcons[0],
+        content: `<div id="Map-content">
+            <div id="siteNotice">
+              notice
+            </div>
+            <div id="bodyContent">
+              <img
+                alt="${weather ? weather[0].icon : ''}"
+                src="${weatherIcons[weather ? weather[0].icon : '']}"
+              />
+            </div>
+          </div>`,
       });
+
       marker.setMap(this.map);
     }
   }
