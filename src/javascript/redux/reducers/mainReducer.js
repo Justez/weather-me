@@ -3,8 +3,9 @@ const initialState = {
   currentWeather: {},
   favorites: [],
   forecast: [],
-  loader: false,
+  loader: true,
   mapZoom: 11,
+  navigatorPresent: true,
   placeCountry: '',
   placeDescription: '',
   searchQuery: '',
@@ -61,12 +62,12 @@ export default (state = initialState, action) => {
         ...state,
         forecast: action.payload,
       };
-    case 'NAVIGATOR_STARTED':
+    case 'BROWSING_STARTED':
       return {
         ...state,
         loader: true,
       };
-    case 'SET_BROWSER_LOCATION_SUCCESS':
+    case 'BROWSING_COMPLETED':
       return {
         ...state,
         loader: false,
@@ -83,6 +84,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: action.payload,
+      };
+    case 'SET_NAVIGATOR_DECLINED':
+      return {
+        ...state,
+        navigatorPresent: false,
       };
     case 'SET_SEARCH_QUERY':
       return {

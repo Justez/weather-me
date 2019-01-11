@@ -1,12 +1,18 @@
 /* eslint-disable no-undef */
-
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Navigation.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faCloudSun, faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSearch,
+  faCloudSun,
+  faStar,
+  faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { changePageAction } from '../redux/actions/pagesActions';
 import { getCitySuggestionsAction, getCityDetailsAction } from '../redux/actions/placesActions';
+import { getLocationWeatherAction } from '../redux/actions/weatherActions';
 import {
+  loaderType,
   placeDescriptionType,
   pageNumberType,
   funcType,
@@ -23,7 +29,10 @@ class Navigation extends React.Component {
 
   render() {
     const {
+      loader,
+      navigatorPresent,
       setPage,
+      getBrowserLocation,
       getCitySuggestions,
       placeDescription,
       pageNumber,
@@ -53,7 +62,7 @@ class Navigation extends React.Component {
             </div>
           </button>
           <div className="Navigation-search">
-            <FontAwesomeIcon icon={faSearch} />
+            <FontAwesomeIcon className="search" icon={faSearch} />
             <input
               defaultValue={placeDescription}
               id="search"
@@ -62,6 +71,9 @@ class Navigation extends React.Component {
               onKeyUp={handleKeyPress}
               type="search"
             />
+            {navigatorPresent
+              && <FontAwesomeIcon className="marker" onClick={!loader && getBrowserLocation} icon={faMapMarkerAlt} />
+            }
           </div>
           <button
             className={pageNumber ? 'background' : ''}
@@ -74,7 +86,7 @@ class Navigation extends React.Component {
             </div>
           </button>
         </div>
-        {searchSuggestions.length > 0 && (
+        {searchSuggestions.length > 0 && (navigatorPresent ? !loader : true) && (
           <div className="Navigation-suggestions">
             <div className="suggestions">
               {searchSuggestions.map(({ href, fullName }) => (
@@ -99,14 +111,19 @@ class Navigation extends React.Component {
 }
 
 const mapStateToProps = ({ app, pages }) => ({
+  loader: app.loader,
+  navigatorPresent: app.navigatorPresent,
   placeDescription: app.placeDescription,
   searchSuggestions: app.searchSuggestions,
   pageNumber: pages.number,
 });
 
 Navigation.propTypes = {
+  loader: loaderType.isRequired,
+  navigatorPresent: loaderType.isRequired,
   placeDescription: placeDescriptionType,
   setPage: funcType.isRequired,
+  getBrowserLocation: funcType.isRequired,
   getCitySuggestions: funcType.isRequired,
   getCityDetails: funcType.isRequired,
   pageNumber: pageNumberType,
@@ -121,6 +138,7 @@ Navigation.defaultProps = {
 
 const mapDispatchToProps = dispatch => ({
   setPage: number => dispatch(changePageAction(number)),
+  getBrowserLocation: () => dispatch(getLocationWeatherAction()),
   getCitySuggestions: value => dispatch(getCitySuggestionsAction(value)),
   getCityDetails: href => dispatch(getCityDetailsAction(href)),
 });

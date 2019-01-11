@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-
 import {
   addCityToFavorites,
   findCityInStorage,
