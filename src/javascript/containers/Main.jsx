@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Main.sass';
 import { loaderType } from '../utils/types';

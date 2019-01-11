@@ -16,6 +16,13 @@ class Map extends React.Component {
     this.map = null;
   }
 
+  shouldComponentUpdate(next) {
+    const { coordinates, weather } = this.props;
+    if (next.weather.name !== weather.name) return true;
+    if (next.coordinates.lat && !coordinates.lat) return true;
+    return false;
+  }
+
   render() {
     const {
       coordinates,
