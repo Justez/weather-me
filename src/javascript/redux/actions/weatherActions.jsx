@@ -1,19 +1,17 @@
 /* eslint-disable no-undef */
 import { getWeatherConditionsByCoords, getWeatherForecastByCoords } from '../helpers/weatherApi';
 
-export const setLocationAction = details => (dispatch) => {
-  dispatch({
-    type: 'SET_LOCATION_DETAILS',
-    payload: details,
-  });
-};
-
 const navigatorStarted = () => ({
   type: 'NAVIGATOR_STARTED',
 });
 
 const navigatorSuccess = payload => ({
   type: 'SET_LOCATION_COORDS',
+  payload,
+});
+
+const setZoom = payload => ({
+  type: 'SET_MAP_ZOOM',
   payload,
 });
 
@@ -41,3 +39,5 @@ export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
     dispatch(setLocationWeatherSuccess());
   }
 };
+
+export const setZoomAction = (level = 11) => dispatch => dispatch(setZoom(level));

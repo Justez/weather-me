@@ -4,6 +4,7 @@ const initialState = {
   favorites: [],
   forecast: [],
   loader: false,
+  mapZoom: 11,
   placeCountry: '',
   placeDescription: '',
   searchQuery: '',
@@ -92,6 +93,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         searchSuggestions: action.payload,
+      };
+    case 'SET_MAP_ZOOM':
+      return {
+        ...state,
+        mapZoom: action.payload,
       };
     default:
       return state;

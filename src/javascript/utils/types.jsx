@@ -55,6 +55,7 @@ const iconType = PropTypes.string;
 const stringType = PropTypes.string;
 const placeDescriptionType = PropTypes.string;
 const pageNumberType = PropTypes.number;
+const numberType = PropTypes.number;
 const funcType = PropTypes.func;
 
 export {
@@ -64,6 +65,7 @@ export {
   funcType,
   iconType,
   loaderType,
+  numberType,
   pageNumberType,
   placeDescriptionType,
   storageItemType,

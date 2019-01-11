@@ -4,10 +4,11 @@ import '../../../assets/stylesheets/components/Main/Map.sass';
 import {
   coordsType,
   funcType,
+  numberType,
   weatherIconType,
   weatherType,
 } from '../../utils/types';
-import { getLocationWeatherAction } from '../../redux/actions/weatherActions';
+import { getLocationWeatherAction, setZoomAction } from '../../redux/actions/weatherActions';
 
 class Map extends React.Component {
   constructor(props) {
@@ -18,9 +19,11 @@ class Map extends React.Component {
   render() {
     const {
       coordinates,
+      mapZoom,
       weatherIcons,
       weather: { weather, main },
       getLocationWeather,
+      setZoom,
     } = this.props;
 
     if (coordinates.lat && window.google) {
@@ -31,11 +34,15 @@ class Map extends React.Component {
       if (document.getElementById('map')) {
         this.map = new google.maps.Map(document.getElementById('map'), {
           center: coordinates,
-          zoom: 9,
+          zoom: mapZoom,
         });
 
         google.maps.event.addListener(this.map, 'click', (event) => {
           getLocationWeather({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+        });
+
+        google.maps.event.addListener(this.map, 'zoom_changed', () => {
+          setZoom(this.map.getZoom());
         });
 
         if (weather) {
@@ -76,19 +83,23 @@ class Map extends React.Component {
 
 Map.propTypes = {
   coordinates: coordsType.isRequired,
+  mapZoom: numberType.isRequired,
   weather: weatherType.isRequired,
   weatherIcons: weatherIconType.isRequired,
   getLocationWeather: funcType.isRequired,
+  setZoom: funcType.isRequired,
 };
 
 const mapStateToProps = ({ app }) => ({
   coordinates: app.coordinates,
+  mapZoom: app.mapZoom,
   weather: app.currentWeather,
   weatherIcons: app.weatherIcons,
 });
 
 const mapDispatchToProps = dispatch => ({
   getLocationWeather: coords => dispatch(getLocationWeatherAction(coords)),
+  setZoom: level => dispatch(setZoomAction(level)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
