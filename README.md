@@ -1,6 +1,6 @@
-#React Weather SPA
+# React Weather SPA
 
-###Features
+### Features
 
 - Async Weather API calls, Searchable Google Maps component.
 - City saving to favorites section.
@@ -11,8 +11,8 @@
 - Mobile-first design.
 - Latest browser versions' support.
 
-####Start app
+#### Start app
 
 `$ yarn start`
 
-####Enjoy!
+#### Enjoy!
