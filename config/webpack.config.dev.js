@@ -227,10 +227,7 @@ module.exports = {
     }),
   ],
 
-  externals: {
-   react: 'React',
-   'react-dom' : 'ReactDom',
- },
+  externals: {},
 
   node: {
     dgram: 'empty',

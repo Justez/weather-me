@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import React from 'react';
 import { connect } from 'react-redux';
 import '../../assets/stylesheets/containers/Navigation.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -72,7 +73,7 @@ class Navigation extends React.Component {
               type="search"
             />
             {navigatorPresent
-              && <FontAwesomeIcon className="marker" onClick={!loader && getBrowserLocation} icon={faMapMarkerAlt} />
+              && <FontAwesomeIcon className="marker" onClick={!loader ? getBrowserLocation : undefined} icon={faMapMarkerAlt} />
             }
           </div>
           <button

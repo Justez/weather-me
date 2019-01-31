@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-
+import React from 'react';
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/ForecastBlock.sass';
 import { forecastType, weatherIconType } from '../../utils/types';

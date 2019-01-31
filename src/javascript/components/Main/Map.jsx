@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import React from 'react';
 import { connect } from 'react-redux';
 import '../../../assets/stylesheets/components/Main/Map.sass';
 import {

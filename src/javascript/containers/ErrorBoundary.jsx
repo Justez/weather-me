@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-
+import React from 'react';
 import Main from './Main';
 
 class ErrorBoundary extends React.Component {

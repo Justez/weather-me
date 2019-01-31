@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import React from 'react';
 import { connect } from 'react-redux';
 import { weatherIconType, cityType, funcType } from '../../utils/types';
 import { getWeatherById } from '../../redux/helpers/weatherApi';
