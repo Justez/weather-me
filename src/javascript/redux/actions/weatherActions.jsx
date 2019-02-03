@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import axios from 'axios';
 import { getWeatherConditionsByCoords, getWeatherForecastByCoords } from '../helpers/weatherApi';
 
 const browsingStarted = () => ({
@@ -26,6 +27,7 @@ const browsingCompleted = () => ({
 export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
   if (!coords) {
     dispatch(browsingStarted());
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         ({ coords: { latitude: lat, longitude: lng } }) => {
@@ -34,10 +36,27 @@ export const getLocationWeatherAction = (coords = undefined) => (dispatch) => {
           dispatch(getWeatherForecastByCoords({ lat, lng }));
           dispatch(browsingCompleted());
         },
-        (error) => {
-          if (error.code === error.PERMISSION_DENIED) {
-            dispatch(navigatorDeclined());
-          }
+        () => {
+          const url = 'http://www.geoplugin.net/json.gp?jsoncallback=?';
+          axios.get(url)
+            .then(({ data, status }) => {
+              if (status === 200) {
+                const str = JSON.parse(`{${
+                  data.substring(data.indexOf('geoplugin_latitude') - 1, data.indexOf('geoplugin_locationAccuracy') - 5)
+                }}`);
+                const latLan = {
+                  lat: Number(str.geoplugin_latitude),
+                  lng: Number(str.geoplugin_longitude),
+                };
+                dispatch(navigatorSuccess(latLan));
+                dispatch(getWeatherConditionsByCoords(latLan));
+                dispatch(getWeatherForecastByCoords(latLan));
+                dispatch(browsingCompleted());
+              }
+            })
+            .catch(() => {
+              dispatch(navigatorDeclined());
+            });
         },
       );
     }

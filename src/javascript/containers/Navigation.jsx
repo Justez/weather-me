@@ -73,6 +73,7 @@ class Navigation extends React.Component {
               type="search"
             />
             {navigatorPresent
+              && pageNumber === 0
               && <FontAwesomeIcon className="marker" onClick={!loader ? getBrowserLocation : undefined} icon={faMapMarkerAlt} />
             }
           </div>
