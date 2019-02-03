@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../assets/stylesheets/containers/App.sass';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAtom } from '@fortawesome/free-solid-svg-icons';
 import Navigation from './containers/Navigation';
 import Main from './containers/Main';
 import Favorites from './containers/Favorites';
@@ -47,6 +49,13 @@ class App extends React.Component {
             ? <Favorites />
             : <Main />
           }
+          <div className="pr">
+            {'Source '}
+            <a href="https://github.com/Justehttps://github.com/Justez/weather-me" rel="noopener noreferrer" target="_blank">
+              <FontAwesomeIcon className="search" icon={faAtom} />
+              {' Justez'}
+            </a>
+          </div>
         </div>
       </div>
     );

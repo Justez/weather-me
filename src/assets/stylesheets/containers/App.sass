@@ -17,6 +17,14 @@ $gradient: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))
   .App
     background: $gradient-background, url("https://drive.google.com/uc?export=view&id=1i4AJ5lyMuStO98oLrc9YjuGnk0AStZsZ")
 
+@media only screen and (min-width: 801px)
+  .pr
+    bottom: 0
+    position: absolute
+    right: 0
+    margin-right: 3vw
+    margin-bottom: 1vw
+    
 .App
   background-position: center
   background-attachment: fixed
@@ -47,6 +55,15 @@ $gradient: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))
     -webkit-transform: translateZ(0)
     -ms-transform: translateZ(0)
     transform: translateZ(0)
+  
+  .pr
+    text-align: right
+    a
+      color: white
+      text-decoration: none
+  
+  div:focus
+    outline: none
 
   @-webkit-keyframes load4
     0%,

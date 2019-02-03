@@ -21,10 +21,11 @@ class Map extends React.Component {
     const { coordinates, weather } = this.props;
     if (next.weather.name !== weather.name) return true;
     if (next.coordinates.lat && !coordinates.lat) return true;
+
     return false;
   }
 
-  render() {
+  componentDidUpdate() {
     const {
       coordinates,
       mapZoom,
@@ -34,47 +35,51 @@ class Map extends React.Component {
       setZoom,
     } = this.props;
 
+    const content = `<div id="Map-content bodyContent">
+      <span className="Map-content-icon">
+        <img
+          alt="${weather ? weather[0].icon : ''}"
+          src="${weather ? weatherIcons[weather[0].icon] : ''}"
+        />
+      </span>
+      ${main ? `
+        <span>
+          ${Math.round(main.temp)}
+          &#8451;
+        </span>` : ''}
+      </div>`;
+
     if (coordinates.lat && window.google) {
-      if (this.map) {
-        google.maps.event.clearInstanceListeners(this.map);
-      }
-
       if (document.getElementById('map')) {
-        this.map = new google.maps.Map(document.getElementById('map'), {
-          center: coordinates,
-          zoom: mapZoom,
-        });
+        if (!this.map) {
+          this.map = new google.maps.Map(document.getElementById('map'), {
+            center: coordinates,
+            zoom: mapZoom,
+          });
 
-        google.maps.event.addListener(this.map, 'click', (event) => {
-          getLocationWeather({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-        });
-
-        google.maps.event.addListener(this.map, 'zoom_changed', () => {
-          setZoom(this.map.getZoom());
-        });
+          google.maps.event.addListener(this.map, 'zoom_changed', () => {
+            setZoom(this.map.getZoom());
+          });
+          google.maps.event.addListener(this.map, 'click', (event) => {
+            getLocationWeather({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+          });
+        }
 
         if (weather) {
           const marker = new google.maps.InfoWindow({
             position: coordinates,
-            content: `<div id="Map-content bodyContent">
-              <span className="Map-content-icon">
-                <img
-                  alt="${weather ? weather[0].icon : ''}"
-                  src="${weather ? weatherIcons[weather[0].icon] : ''}"
-                />
-              </span>
-              ${main ? `
-                <span>
-                  ${Math.round(main.temp)}
-                  &#8451;
-                </span>` : ''}
-            </div>`,
+            content,
           });
-
           marker.setMap(this.map);
         }
       }
     }
+  }
+
+  render() {
+    const {
+      coordinates,
+    } = this.props;
 
     if (coordinates.lat) {
       return (
