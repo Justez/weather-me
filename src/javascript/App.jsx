@@ -51,7 +51,7 @@ class App extends React.Component {
           }
           <div className="pr">
             {'Source '}
-            <a href="https://github.com/Justehttps://github.com/Justez/weather-me" rel="noopener noreferrer" target="_blank">
+            <a href="https://github.com/Justez/weather-me" rel="noopener noreferrer" target="_blank">
               <FontAwesomeIcon className="search" icon={faAtom} />
               {' Justez'}
             </a>
