@@ -1,18 +1,23 @@
-# React Weather SPA
+# React Weather SPA  :partly_sunny:
 
 ### Features
 
-- Async Weather API calls, Searchable Google Maps component.
-- City saving to favorites section.
-- Weather forecast display for five days.
-- Real Time weather display on Map and main view.
-- Geolocation.
-- Eslint and Sasslint integrated.
-- Mobile-first design.
-- Latest browser versions' support.
+- Async Weather API calls
+- Searchable Google Maps component  :earth_africa:
+- City saving to favorites  :yellow_heart:
+- Weather forecast display for five days  :chart_with_upwards_trend:
+- Real Time multi-city weather display on Map  :pushpin:
+- Geolocation or IP position determination  :shipit:
+- Eslint and Sasslint controll
+- Mobile-first design
+- Latest browser versions' support
 
-#### Start app
+#### Live :loudspeaker:
 
-`$ yarn start`
+[@Netlify](https://weatherme.netlify.com)
 
-#### Enjoy!
+#### Start app  :runner:
+
+`$ yarn install && yarn start`
+
+### Enjoy!
