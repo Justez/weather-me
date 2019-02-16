@@ -23,6 +23,7 @@ const CurrentWeatherBlock = ({
   weather,
   weatherIcons,
 }) => {
+  // console.log(weather.wind.deg);
   if (weather.main) {
     return (
       <div className="Current-weather background">
@@ -71,7 +72,7 @@ const CurrentWeatherBlock = ({
             &#8451;
           </div>
           <div>
-            {`Wind: ${directions[((Math.floor((weather.wind.deg / 45) + 0.5) % 16))]} `}
+            {`Wind: ${weather.wind && weather.wind.deg ? directions[((Math.floor((weather.wind.deg / 45) + 0.5) % 16))] : ''} `}
             {`${weather.wind.speed}km/h`}
           </div>
         </div>

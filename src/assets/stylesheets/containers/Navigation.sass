@@ -78,10 +78,11 @@ $gradient-strong: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))
 .Navigation-suggestions
   margin: 0 0 0 0
   margin-left: 22vw
-  background-color: white
-  width: 50vw
+  min-width: 50vw
   display: block
   justify-content: center
+  position: fixed
+  z-index: 2 
 
   .suggestions
     background: $gradient-strong
@@ -102,3 +103,4 @@ $gradient-strong: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))
 @media only screen and (max-width: 600px)
   .Navigation-suggestions
     margin-left: 0
+    width: 96vw
